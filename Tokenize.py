@@ -1,28 +1,33 @@
 import sys
 import dump
+import Parser
 
 arguments = sys.argv
 
 # Strg+Alt+L : Reformat
-
 # Aufgaben:
 # bekommt eine 2D-Liste, geschachtelt mit Tupels
-# ({Argument1}{Obj1})
-# ({Argument2}{Obj2})
+# In Tokens umwandeln:
+# In eine dump datei speichern
 #
-# - File in tokens umwandeln
-# - In eine dump datei speichern
-#
-#
-testliste = [
-    ['a']['Variable'],
-    ['=']['Operator'],
-    ['1'][''],
-]
+# die Objekttypen sind vom parser übergeben worden
+# die tokenize funktion beschreibt durch
 
 
-def tokenize(inputliste):
-    for line in inputliste:
-        print()
 
-    # endfor
+def tokenize(inputlist):
+    for line in inputlist:
+        for objekt in line:
+            print(objekt.data)
+
+
+
+
+
+    outputlist = inputlist
+
+
+
+#liste Tupels, nicht 2D, Variable assignment, Variabelname,
+
+return outputlist

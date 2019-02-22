@@ -14,10 +14,13 @@ arguments = sys.argv
 # die tokenize funktion beschreibt durch logische KOmbination der Tupels die Sprachkonstrukte
 # Zuletzt die Liste mit dump in eine datei speichern
 
-
 # Objektfolgen:
-# [Var_Name,Operant'=',Integer]  -> Zuweisung
 # [Comment] -> Kommentar
+
+# ist "Name" ein "Var_Name" oder "Fun_Name"
+
+# [Var_Name,Operant'=',Integer]   -> Zuweisung.Integer
+# [Var_Name,Operant'=',Var_Name]  -> Zuweisung.Variable
 
 # Einfache Operationen: "a=b+1", "a+=b", "a=a+1"
 # [Var_Name,Operant'=',Var_Name,Operant='+',Integer] -> Zuweisung.Addition
@@ -42,14 +45,15 @@ arguments = sys.argv
 
 
 
+#funtkionaufruf: prüfen ob var_name oder fun_name
+#if schleifen
+#
 
 
 def tokenize(inputlist):
     for line in inputlist:
         for objekt in line:
             print(objekt.data, objekt.type)
-
-
 
     outputlist = inputlist
 

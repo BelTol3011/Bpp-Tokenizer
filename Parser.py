@@ -11,7 +11,7 @@ class Variable_Name():
         self.data = name
 
 class Integer():
-    type = "integer"
+    type = "Integer"
     def __init__(self, int):
         self.data = int
 

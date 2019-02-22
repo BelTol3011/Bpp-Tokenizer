@@ -5,29 +5,26 @@ import Parser
 arguments = sys.argv
 
 # Strg+Alt+L : Reformat
+#
+#
 # Aufgaben:
 # bekommt eine 2D-Liste, geschachtelt mit Tupels
 # In Tokens umwandeln:
-# In eine dump datei speichern
-#
-# die Objekttypen sind vom parser übergeben worden
-# die tokenize funktion beschreibt durch
-
+# Die Objekttypen sind vom parser übergeben worden
+# die tokenize funktion beschreibt durch logische KOmbination der Tupels die Sprachkonstrukte
+# Zuletzt die Liste mit dump in eine datei speichern
 
 
 def tokenize(inputlist):
     for line in inputlist:
         for objekt in line:
-            print(objekt.data)
-
-
+            print(objekt.data, objekt.type)
 
 
 
     outputlist = inputlist
 
 
+#Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
 
-#liste Tupels, nicht 2D, Variable assignment, Variabelname,
-
-return outputlist
+    return outputlist

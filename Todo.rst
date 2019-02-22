@@ -2,6 +2,9 @@
   Todo
 ========
 
+:author: Bela Tollkien and Johannes Blickensdorff
+
+
 .. contents::
 
 ---------------
@@ -9,7 +12,7 @@
 ---------------
 * Write actual Program
 
-------------
- Adittional
-------------
+-------------
+ Additional
+-------------
 * Add GUI

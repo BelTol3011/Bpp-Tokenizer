@@ -15,9 +15,15 @@ class Integer():
     def __init__(self, int):
         self.data = int
 
+class Comment():
+    type = "Comment"
+    def __init__(self, comment):
+        self.data = comment
+
+
 
 testlist = [
-    [Variable_Name("a"),Operant("="),Integer(1)]
+    [Variable_Name("a"), Operant("="), Integer(1)]
 ]
 
 Tokenize.tokenize(testlist)

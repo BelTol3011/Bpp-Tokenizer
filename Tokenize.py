@@ -15,6 +15,10 @@ arguments = sys.argv
 # Zuletzt die Liste mit dump in eine datei speichern
 
 
+# Objektfolgen:
+# [Var_Name,Operant'=',Integer]  -> Zuweisung
+# [
+
 def tokenize(inputlist):
     for line in inputlist:
         for objekt in line:

@@ -15,3 +15,8 @@ It looks like This:
 
 .. note:: That I also could write it like This:
           ``[[object, object, object],[object, object]]``
+
+
+.. admonition:: Example
+
+   ``[[Variable_Name(a), Operant("="), Integer(1)]]``

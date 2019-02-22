@@ -29,6 +29,13 @@ arguments = sys.argv
 
 # [Var_Name1,Operant'+=',Var_Name2] -> Zuweisung.Addition
 # [Var_Name1,Operant'+=',Integer]   -> Zuweisung.Addition
+# [Var_Name1,Operant'*=',Var_Name2] -> Zuweisung.Multiplikation
+# [Var_Name1,Operant'*=',Integer]   -> Zuweisung.Multiplikation
+# [Var_Name1,Operant'/=',Var_Name2] -> Zuweisung.Division
+# [Var_Name1,Operant'/=',Integer]   -> Zuweisung.Division
+# [Var_Name1,Operant'-=',Var_Name2] -> Zuweisung.Subtraktion
+# [Var_Name1,Operant'-=',Integer]   -> Zuweisung.Subtraktion
+
 
 
 # Einfache Operationen, Argumente vertauscht: "a=1+b"

@@ -19,4 +19,4 @@ It looks like This:
 
 .. admonition:: Example
 
-   ``[[Variable_Name(a), Operant("="), Integer(1)]]``
+   ``[[Variable_Name("a"), Operant("="), Integer(1)]]``

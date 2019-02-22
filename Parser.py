@@ -1,20 +1,18 @@
 import Tokenize
 
-operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
-compare_operants = ["or", "and", "not"]
-calc_operants = ["+", "-", "*", "/", "%"]
-
-
-def is_type(x):
-    if x in operants: return "Operant"
-    if x in compare_operants: return "Compare_Operant"
-
 
 class Operant():
     type = "Operant"
 
     def __init__(self, type):
         self.data = type
+
+
+class Space():
+    type = "Space"
+
+    def __init__(self, space=" "):
+        self.data = space
 
 
 class Compare_Operant():
@@ -44,6 +42,36 @@ class Comment():
     def __init__(self, comment):
         self.data = comment
 
+class Parantheses():
+    type = "Parantheses"
+    def __init__(self, paran):
+        self.data = paran
+
+
+class Parantheses():
+    type = "Parantheses"
+    def __init__(self, paran):
+        self.data = paran
+
+
+def is_type(x):
+    if x in operants:
+        return "Operant"
+    elif x in compare_operants:
+        return "Compare_Operant"
+    elif x == " " or x == "":
+        return "space"
+    elif x in "()":
+        return "parants"
+    else:
+        return "name"
+
+
+classregister = {"Operant": Operant, "Compare_Operant": Compare_Operant, "name": Name, "space": Space, "parants":Parantheses}
+operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
+compare_operants = ["or", "and", "not"]
+calc_operants = ["+", "-", "*", "/", "%"]
+
 
 def concatenate(input_list):
     output_list = []
@@ -55,24 +83,42 @@ def concatenate(input_list):
         temp = ""
         current_letter = input_list[i]
         current_type = is_type(current_letter)
-        print(current_letter, current_type)
+        # print(current_letter, current_type)
         if current_letter == "":
             break
         for j in range(i, len(input_list)):
-            if input_list[j] == current_letter:
+            if is_type(input_list[j]) == is_type(current_letter):
                 temp += input_list[j]
+
             else:
+                # temp += input_list[j]
                 upto = j
                 break
-        output_list.append(temp)
+
+        output_list.append((current_type, temp))
         i = upto - 1
         i += 1
     return output_list
 
 
 def Pars(inlist):
-    print(inlist)
-    print(concatenate(list(inlist[0])))
+    #print(inlist)
+    _outlist = []
+    for line in inlist:
+        _outlist.append(concatenate(list(line)))
+
+    print(_outlist)
+    outlist = []
+    for line in _outlist:
+        temp = []
+        for tupel in line:
+            type = tupel[0]
+            arg = tupel[1]
+           # print(arg)
+            temp.append(classregister[type](arg))
+        outlist.append(temp)
+    print(outlist)
+    return outlist
 
 
 testlist = [

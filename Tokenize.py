@@ -17,7 +17,29 @@ arguments = sys.argv
 
 # Objektfolgen:
 # [Var_Name,Operant'=',Integer]  -> Zuweisung
-# [
+# [Comment] -> Kommentar
+# a+=b
+
+
+# Einfache Operationen: "a=b+1"
+# [Var_Name1,Operant'=',Var_Name2,Operant='+',Integer] -> Zuweisung.Addition
+# [Var_Name1,Operant'=',Var_Name2,Operant='-',Integer] -> Zuweisung.Subtraktion
+# [Var_Name1,Operant'=',Var_Name2,Operant='/',Integer] -> Zuweisung.Division
+# [Var_Name1,Operant'=',Var_Name2,Operant='*',Integer] -> Zuweisung.Multiplikation
+
+# [Var_Name1,Operant'+=',Var_Name2] -> Zuweisung.Addition
+# [Var_Name1,Operant'+=',Integer]   -> Zuweisung.Addition
+
+
+# Einfache Operationen, Argumente vertauscht: "a=1+b"
+# [Var_Name1,Operant'=',Integer,Operant='+',Var_Name2] -> Zuweisung.Addition
+# [Var_Name1,Operant'=',Integer,Operant='-',Var_Name2] -> Zuweisung.Subtraktion
+# [Var_Name1,Operant'=',Integer,Operant='/',Var_Name2] -> Zuweisung.Division
+# [Var_Name1,Operant'=',Integer,Operant='*',Var_Name2] -> Zuweisung.Multiplikation
+
+
+
+
 
 def tokenize(inputlist):
     for line in inputlist:

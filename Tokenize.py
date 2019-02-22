@@ -18,31 +18,27 @@ arguments = sys.argv
 # Objektfolgen:
 # [Var_Name,Operant'=',Integer]  -> Zuweisung
 # [Comment] -> Kommentar
-# a+=b
 
+# Einfache Operationen: "a=b+1", "a+=b", "a=a+1"
+# [Var_Name,Operant'=',Var_Name,Operant='+',Integer] -> Zuweisung.Addition
+# [Var_Name,Operant'=',Var_Name,Operant='-',Integer] -> Zuweisung.Subtraktion
+# [Var_Name,Operant'=',Var_Name,Operant='/',Integer] -> Zuweisung.Division
+# [Var_Name,Operant'=',Var_Name,Operant='*',Integer] -> Zuweisung.Multiplikation
 
-# Einfache Operationen: "a=b+1"
-# [Var_Name1,Operant'=',Var_Name2,Operant='+',Integer] -> Zuweisung.Addition
-# [Var_Name1,Operant'=',Var_Name2,Operant='-',Integer] -> Zuweisung.Subtraktion
-# [Var_Name1,Operant'=',Var_Name2,Operant='/',Integer] -> Zuweisung.Division
-# [Var_Name1,Operant'=',Var_Name2,Operant='*',Integer] -> Zuweisung.Multiplikation
-
-# [Var_Name1,Operant'+=',Var_Name2] -> Zuweisung.Addition
-# [Var_Name1,Operant'+=',Integer]   -> Zuweisung.Addition
-# [Var_Name1,Operant'*=',Var_Name2] -> Zuweisung.Multiplikation
-# [Var_Name1,Operant'*=',Integer]   -> Zuweisung.Multiplikation
-# [Var_Name1,Operant'/=',Var_Name2] -> Zuweisung.Division
-# [Var_Name1,Operant'/=',Integer]   -> Zuweisung.Division
-# [Var_Name1,Operant'-=',Var_Name2] -> Zuweisung.Subtraktion
-# [Var_Name1,Operant'-=',Integer]   -> Zuweisung.Subtraktion
-
-
+# [Var_Name,Operant'+=',Var_Name]   -> Zuweisung.Addition
+# [Var_Name,Operant'+=',Integer]    -> Zuweisung.Addition
+# [Var_Name,Operant'*=',Var_Name]   -> Zuweisung.Multiplikation
+# [Var_Name,Operant'*=',Integer]    -> Zuweisung.Multiplikation
+# [Var_Name,Operant'/=',Var_Name]   -> Zuweisung.Division
+# [Var_Name,Operant'/=',Integer]    -> Zuweisung.Division
+# [Var_Name,Operant'-=',Var_Name]   -> Zuweisung.Subtraktion
+# [Var_Name,Operant'-=',Integer]    -> Zuweisung.Subtraktion
 
 # Einfache Operationen, Argumente vertauscht: "a=1+b"
-# [Var_Name1,Operant'=',Integer,Operant='+',Var_Name2] -> Zuweisung.Addition
-# [Var_Name1,Operant'=',Integer,Operant='-',Var_Name2] -> Zuweisung.Subtraktion
-# [Var_Name1,Operant'=',Integer,Operant='/',Var_Name2] -> Zuweisung.Division
-# [Var_Name1,Operant'=',Integer,Operant='*',Var_Name2] -> Zuweisung.Multiplikation
+# [Var_Name,Operant'=',Integer,Operant='+',Var_Name] -> Zuweisung.Addition
+# [Var_Name,Operant'=',Integer,Operant='-',Var_Name] -> Zuweisung.Subtraktion
+# [Var_Name,Operant'=',Integer,Operant='/',Var_Name] -> Zuweisung.Division
+# [Var_Name,Operant'=',Integer,Operant='*',Var_Name] -> Zuweisung.Multiplikation
 
 
 

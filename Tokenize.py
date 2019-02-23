@@ -85,13 +85,6 @@ def tokenize(inputlist):
         print(inputlist[InputZeilenIndex], "| Inputline")
 
         for ChainZeilenIndex in range(0, len(chain)):
-            #  for elementIndex in range(0, len(inputlist[zeilenIndex])):  # Element
-            #      #print(inputlist[zeilenIndex][elementIndex].type, " ", chain[zeilenIndex][0][elementIndex])
-            #
-            #           if inputlist[zeilenIndex][elementIndex].type != chain[zeilenIndex][0][elementIndex]:
-            #              print(inputlist[zeilenIndex][elementIndex].type, " != ", chain[zeilenIndex][0][elementIndex])
-            #         else:
-            #            print(inputlist[zeilenIndex][elementIndex].type, " = ", chain[zeilenIndex][0][elementIndex])
 
             if len(inputlist[InputZeilenIndex]) == len(chain[ChainZeilenIndex][0]):
                 print(chain[ChainZeilenIndex][0], " ", len(inputlist[InputZeilenIndex]), " ", len(chain[ChainZeilenIndex][0]))

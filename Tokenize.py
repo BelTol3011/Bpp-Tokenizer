@@ -79,17 +79,22 @@ def tokenize(inputlist):
         ([Parser.Name, Parser.Space, Parser.Operant, Parser.Space, Parser.Name], "Zuweisung.Variable"),
         # -> Zuweisung.Variable
     ]
-    print(inputlist)
-    for line in inputlist:
-        for objekt in line:
-            for ch in chain:
-                if objekt == ch:
-                    print("ch")
-        print("newlne")
+
+    #print(inputlist)
+    for inputline in inputlist:
+        print(inputline, "| Line" )
+
+#        for object in line:
+ #          # print(object.type)
+  #          #
+        for chainLine in chain:
+                if inputline == chainLine[0]:
+                     print("yeah")
+        print("------------")
 
     # debug
     outputlist = inputlist
 
     # Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
 
-    return outputlist
+    return ""

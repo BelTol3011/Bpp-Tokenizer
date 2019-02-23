@@ -44,17 +44,15 @@ arguments = sys.argv
 # [Var_Name,Operant'=',Integer,Operant='*',Var_Name] -> Zuweisung.Multiplikation
 
 
-
 #funtkionaufruf: prüfen ob var_name oder fun_name
 #if schleifen
 #
-
 
 def tokenize(inputlist):
     for line in inputlist:
         for objekt in line:
             print(objekt.data, objekt.type)
-
+        print("newlne")
     outputlist = inputlist
 
 

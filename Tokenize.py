@@ -1,5 +1,4 @@
 import sys
-import dump
 import Parser
 
 arguments = sys.argv
@@ -16,78 +15,81 @@ arguments = sys.argv
 
 # Objektfolgen:
 # [Comment] -> Kommentar
-# [Var_Name,Operant'=',Integer]  -> Zuweisung.Integer
-# [Var_Name,Operant'=',Var_Name] -> Zuweisung.Variable
-# [Var_Name,Space,Operant'=',Space,Integer]  -> Zuweisung.Integer
-# [Var_Name,Space,Operant'=',Space,Var_Name] -> Zuweisung.Variable
+# [Name,Operant'=',Integer]  -> Zuweisung.Integer
+# [Name,Operant'=',Name] -> Zuweisung.Variable
+# [Name,Space,Operant'=',Space,Integer]  -> Zuweisung.Integer
+# [Name,Space,Operant'=',Space,Name] -> Zuweisung.Variable
 
 # Einfache Operationen "a+=1", "a+=b"
-# [Var_Name,Operant'+=',Var_Name]   -> Zuweisung.Addition
-# [Var_Name,Operant'+=',Integer]    -> Zuweisung.Addition
-# [Var_Name,Operant'*=',Var_Name]   -> Zuweisung.Multiplikation
-# [Var_Name,Operant'*=',Integer]    -> Zuweisung.Multiplikation
-# [Var_Name,Operant'/=',Var_Name]   -> Zuweisung.Division
-# [Var_Name,Operant'/=',Integer]    -> Zuweisung.Division
-# [Var_Name,Operant'-=',Var_Name]   -> Zuweisung.Subtraktion
-# [Var_Name,Operant'-=',Integer]    -> Zuweisung.Subtraktion
+# [Name,Operant'+=',Name]   -> Zuweisung.Addition
+# [Name,Operant'+=',Integer]    -> Zuweisung.Addition
+# [Name,Operant'*=',Name]   -> Zuweisung.Multiplikation
+# [Name,Operant'*=',Integer]    -> Zuweisung.Multiplikation
+# [Name,Operant'/=',Name]   -> Zuweisung.Division
+# [Name,Operant'/=',Integer]    -> Zuweisung.Division
+# [Name,Operant'-=',Name]   -> Zuweisung.Subtraktion
+# [Name,Operant'-=',Integer]    -> Zuweisung.Subtraktion
 # Einfache Operationen, mit Space: "a += 1", "a += b"
-# [Var_Name,Space,Operant'+=',Space,Var_Name]   -> Zuweisung.Addition
-# [Var_Name,Space,Operant'+=',Space,Integer]    -> Zuweisung.Addition
-# [Var_Name,Space,Operant'*=',Space,Var_Name]   -> Zuweisung.Multiplikation
-# [Var_Name,Space,Operant'*=',Space,Integer]    -> Zuweisung.Multiplikation
-# [Var_Name,Space,Operant'/=',Space,Var_Name]   -> Zuweisung.Division
-# [Var_Name,Space,Operant'/=',Space,Integer]    -> Zuweisung.Division
-# [Var_Name,Space,Operant'-=',Space,Var_Name]   -> Zuweisung.Subtraktion
-# [Var_Name,Space,Operant'-=',Space,Integer]    -> Zuweisung.Subtraktion
+# [Name,Space,Operant'+=',Space,Name]   -> Zuweisung.Addition
+# [Name,Space,Operant'+=',Space,Integer]    -> Zuweisung.Addition
+# [Name,Space,Operant'*=',Space,Name]   -> Zuweisung.Multiplikation
+# [Name,Space,Operant'*=',Space,Integer]    -> Zuweisung.Multiplikation
+# [Name,Space,Operant'/=',Space,Name]   -> Zuweisung.Division
+# [Name,Space,Operant'/=',Space,Integer]    -> Zuweisung.Division
+# [Name,Space,Operant'-=',Space,Name]   -> Zuweisung.Subtraktion
+# [Name,Space,Operant'-=',Space,Integer]    -> Zuweisung.Subtraktion
 
 # Einfache Operationen: "a=b+1", "a= a/b", "a=a*1"
-# [Var_Name,Operant'=',Var_Name,Operant='+',Integer] -> Zuweisung.Addition
-# [Var_Name,Operant'=',Var_Name,Operant='-',Integer] -> Zuweisung.Subtraktion
-# [Var_Name,Operant'=',Var_Name,Operant='/',Integer] -> Zuweisung.Division
-# [Var_Name,Operant'=',Var_Name,Operant='*',Integer] -> Zuweisung.Multiplikation
+# [Name,Operant'=',Name,Operant='+',Integer] -> Zuweisung.Addition
+# [Name,Operant'=',Name,Operant='-',Integer] -> Zuweisung.Subtraktion
+# [Name,Operant'=',Name,Operant='/',Integer] -> Zuweisung.Division
+# [Name,Operant'=',Name,Operant='*',Integer] -> Zuweisung.Multiplikation
 # Einfache Operationen, mit Space: "a = a + 1"
-# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='+',Space, Integer] -> Zuweisung.Addition
-# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='-',Space, Integer] -> Zuweisung.Subtraktion
-# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='/',Space, Integer] -> Zuweisung.Division
-# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='*',Space, Integer] -> Zuweisung.Multiplikation
+# [Name,Space,Operant'=',Space,Name,Operant='+',Space, Integer] -> Zuweisung.Addition
+# [Name,Space,Operant'=',Space,Name,Operant='-',Space, Integer] -> Zuweisung.Subtraktion
+# [Name,Space,Operant'=',Space,Name,Operant='/',Space, Integer] -> Zuweisung.Division
+# [Name,Space,Operant'=',Space,Name,Operant='*',Space, Integer] -> Zuweisung.Multiplikation
 
 # Einfache Operationen, Argumente vertauscht: "a=1+b"
-# [Var_Name,Operant'=',Integer,Operant='+',Var_Name] -> Zuweisung.Addition
-# [Var_Name,Operant'=',Integer,Operant='-',Var_Name] -> Zuweisung.Subtraktion
-# [Var_Name,Operant'=',Integer,Operant='/',Var_Name] -> Zuweisung.Division
-# [Var_Name,Operant'=',Integer,Operant='*',Var_Name] -> Zuweisung.Multiplikation
+# [Name,Operant'=',Integer,Operant='+',Name] -> Zuweisung.Addition
+# [Name,Operant'=',Integer,Operant='-',Name] -> Zuweisung.Subtraktion
+# [Name,Operant'=',Integer,Operant='/',Name] -> Zuweisung.Division
+# [Name,Operant'=',Integer,Operant='*',Name] -> Zuweisung.Multiplikation
 # Einfache Operationen, Argumente vertauscht: "a = 1 + b"
-# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='+',Space,Var_Name] -> Zuweisung.Addition
-# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='-',Space,Var_Name] -> Zuweisung.Subtraktion
-# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='/',Space,Var_Name] -> Zuweisung.Division
-# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='*',Space,Var_Name] -> Zuweisung.Multiplikation
+# [Name,Space,Operant'=',Space,Integer,Space,Operant='+',Space,Name] -> Zuweisung.Addition
+# [Name,Space,Operant'=',Space,Integer,Space,Operant='-',Space,Name] -> Zuweisung.Subtraktion
+# [Name,Space,Operant'=',Space,Integer,Space,Operant='/',Space,Name] -> Zuweisung.Division
+# [Name,Space,Operant'=',Space,Integer,Space,Operant='*',Space,Name] -> Zuweisung.Multiplikation
 
 
-# tbd: ist "Name" ein "Var_Name" oder "Fun_Name"
+# tbd: ist "Name" ein "Name" oder "Fun_Name"
 
-#if schleifen
+# if schleifen
 #
-ObjectChain = [
-[Parser.Comment], #-> Kommentar
-[Var_Name,Operant'=',Integer],  #-> Zuweisung.Integer
-[Var_Name,Operant'=',Var_Name], #-> Zuweisung.Variable
-[Var_Name,Space,Operant'=',Space,Integer],  #-> Zuweisung.Integer
-[Var_Name,Space,Operant'=',Space,Var_Name], #-> Zuweisung.Variable
 
 
-]
 
 def tokenize(inputlist):
+    chain = [
+        ([Parser.Comment], "Kommentar"),  # -> Kommentar
+        ([Parser.Name, Parser.Operant, Parser.Integer], "Zuweisung.Integer"),  # -> Zuweisung.Integer
+        ([Parser.Name, Parser.Operant, Parser.Name], "Zuweisung.Variable"),  # -> Zuweisung.Variable
+        ([Parser.Name, Parser.Space, Parser.Operant, Parser.Space, Parser.Integer], "Zuweisung.Integer"),
+        # -> Zuweisung.Integer
+        ([Parser.Name, Parser.Space, Parser.Operant, Parser.Space, Parser.Name], "Zuweisung.Variable"),
+        # -> Zuweisung.Variable
+    ]
+    print(inputlist)
     for line in inputlist:
         for objekt in line:
-            print(objekt.data, objekt.type)
+            for ch in chain:
+                if objekt == ch:
+                    print("ch")
         print("newlne")
 
-
-    #debug
+    # debug
     outputlist = inputlist
 
-
-#Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
+    # Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
 
     return outputlist

@@ -1,5 +1,4 @@
 #bla
-a = "asdasdasdas"
-a = 8
-ba = 4
-f=2
+string = "asdasdasdas"
+integer = 3
+float = 0.65234787346563728

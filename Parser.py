@@ -1,6 +1,3 @@
-import Tokenize
-
-
 class Operant:
     type = "Operant"
 
@@ -56,6 +53,21 @@ class String:
     def __init__(self, paran):
         self.data = paran
 
+
+class Float:
+    type = "Float"
+
+    def __init__(self, paran):
+        self.data = paran
+
+
+class Dot:
+    type = "Dot"
+
+    def __init__(self, paran):
+        self.data = paran
+
+
 def is_type(x):
     if x in operants:
         return "Operant"
@@ -70,17 +82,19 @@ def is_type(x):
     elif x in "1234567890":
         return "integer"
     elif x == ".":
-        return "floating_point"
+        return "dot"
     elif x == "\"":
         return "quot_mark"
     elif x == "#":
         return "comment"
+    elif x == ",":
+        return "coma"
     else:
         return "name"
 
 
 classregister = {"Operant": Operant, "Compare_Operant": Compare_Operant, "name": Name, "space": Space,
-                 "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String}
+                 "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]
 calc_operants = ["+", "-", "*", "/", "%"]
@@ -133,7 +147,7 @@ def concatenate(input_list):
 
         output_list.append((current_type, temp))
         i = upto - 1
-        #i += 1
+        # i += 1
     return output_list
 
 
@@ -153,4 +167,12 @@ def Pars(inlist):
             # print(arg)
             temp.append(classregister[type](arg))
         outlist.append(temp)
+
+    for i in range(0, len(outlist)):
+        for j in range(1, len(outlist[i]) - 1):
+            if outlist[i][j - 1].type == "Integer" and outlist[i][j].type == "Dot" and outlist[i][j + 1].type == \
+                    "Integer":
+                outlist[i][j] = Float(float(str(outlist[i][j - 1].data) + "." + str(outlist[i][j + 1].data)))
+                del outlist[i][j + 1]
+                del outlist[i][j - 1]
     return outlist

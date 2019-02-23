@@ -67,6 +67,15 @@ arguments = sys.argv
 
 #if schleifen
 #
+ObjectChain = [
+[Parser.Comment], #-> Kommentar
+[Var_Name,Operant'=',Integer],  #-> Zuweisung.Integer
+[Var_Name,Operant'=',Var_Name], #-> Zuweisung.Variable
+[Var_Name,Space,Operant'=',Space,Integer],  #-> Zuweisung.Integer
+[Var_Name,Space,Operant'=',Space,Var_Name], #-> Zuweisung.Variable
+
+
+]
 
 def tokenize(inputlist):
     for line in inputlist:

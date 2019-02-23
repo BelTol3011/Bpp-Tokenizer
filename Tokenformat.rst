@@ -40,6 +40,7 @@ The object types are:
 * Comment
 * Parantheses
 * String
+* Float
 
 -----
  Out

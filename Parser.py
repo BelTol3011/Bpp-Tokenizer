@@ -50,23 +50,37 @@ class Parantheses:
         self.data = paran
 
 
+class String:
+    type = "String"
+
+    def __init__(self, paran):
+        self.data = paran
+
 def is_type(x):
     if x in operants:
         return "Operant"
     elif x in compare_operants:
         return "Compare_Operant"
+    elif x in calc_operants:
+        return "Calc_"
     elif x == " " or x == "":
         return "space"
     elif x in "()":
         return "parants"
     elif x in "1234567890":
         return "integer"
+    elif x == ".":
+        return "floating_point"
+    elif x == "\"":
+        return "quot_mark"
+    elif x == "#":
+        return "comment"
     else:
         return "name"
 
 
 classregister = {"Operant": Operant, "Compare_Operant": Compare_Operant, "name": Name, "space": Space,
-                 "parants": Parantheses, "integer": Integer}
+                 "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]
 calc_operants = ["+", "-", "*", "/", "%"]
@@ -74,14 +88,29 @@ calc_operants = ["+", "-", "*", "/", "%"]
 
 def concatenate(input_list):
     output_list = []
-    i = 0
-
+    i = -1
     input_list.append("")
-
+    string = False
+    stringstring = ""
     while i < len(input_list):
+        i += 1
         temp = ""
         current_letter = input_list[i]
         current_type = is_type(current_letter)
+        if string and current_type == "quot_mark":
+            string = False
+            stringstring += current_letter
+            output_list.append(("string", stringstring))
+            # print(1)
+            continue
+        if current_type == "quot_mark":
+            string = True
+            stringstring += current_letter
+            continue
+        if string:
+            stringstring += current_letter
+            continue
+
         # print(current_letter, current_type)
         if current_letter == "":
             break
@@ -96,7 +125,7 @@ def concatenate(input_list):
 
         output_list.append((current_type, temp))
         i = upto - 1
-        i += 1
+        #i += 1
     return output_list
 
 
@@ -106,7 +135,7 @@ def Pars(inlist):
     for line in inlist:
         _outlist.append(concatenate(list(line)))
 
-    #print(_outlist)
+    # print(_outlist)
     outlist = []
     for line in _outlist:
         temp = []

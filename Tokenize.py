@@ -3,6 +3,7 @@ import Parser
 
 arguments = sys.argv
 
+
 # Strg+Alt+L : Reformat
 #
 #
@@ -68,32 +69,39 @@ arguments = sys.argv
 #
 
 
-
 def tokenize(inputlist):
     chain = [
-        ([Parser.Comment], "Kommentar"),  # -> Kommentar
-        ([Parser.Name, Parser.Operant, Parser.Integer], "Zuweisung.Integer"),  # -> Zuweisung.Integer
-        ([Parser.Name, Parser.Operant, Parser.Name], "Zuweisung.Variable"),  # -> Zuweisung.Variable
-        ([Parser.Name, Parser.Space, Parser.Operant, Parser.Space, Parser.Integer], "Zuweisung.Integer"),
+        (["Comment", "Name"], "Kommentar"),  # -> Kommentar
+        (["Name", "Operant", "Integer"], "Zuweisung.Integer"),  # -> Zuweisung.Integer
+        (["Name", "Operant", "Name"], "Zuweisung.Variable"),  # -> Zuweisung.Variable
+        (["Name", "Space", "Operant", "Space", "Integer"], "Zuweisung.Integer"),
         # -> Zuweisung.Integer
         ([Parser.Name, Parser.Space, Parser.Operant, Parser.Space, Parser.Name], "Zuweisung.Variable"),
         # -> Zuweisung.Variable
     ]
 
-    #print(inputlist)
-    for inputline in inputlist:
-        print(inputline, "| Line" )
+    # print(inputlist)
+    for InputZeilenIndex in range(0, len(inputlist)):  # Line
+        print(inputlist[InputZeilenIndex], "| Inputline")
 
-#        for object in line:
- #          # print(object.type)
-  #          #
-        for chainLine in chain:
-                if inputline == chainLine[0]:
-                     print("yeah")
-        print("------------")
+        for ChainZeilenIndex in range(0, len(chain)):
+            #  for elementIndex in range(0, len(inputlist[zeilenIndex])):  # Element
+            #      #print(inputlist[zeilenIndex][elementIndex].type, " ", chain[zeilenIndex][0][elementIndex])
+            #
+            #           if inputlist[zeilenIndex][elementIndex].type != chain[zeilenIndex][0][elementIndex]:
+            #              print(inputlist[zeilenIndex][elementIndex].type, " != ", chain[zeilenIndex][0][elementIndex])
+            #         else:
+            #            print(inputlist[zeilenIndex][elementIndex].type, " = ", chain[zeilenIndex][0][elementIndex])
 
-    # debug
-    outputlist = inputlist
+            if len(inputlist[InputZeilenIndex]) == len(chain[ChainZeilenIndex][0]):
+                print(chain[ChainZeilenIndex][0], " ", len(inputlist[InputZeilenIndex]), " ", len(chain[ChainZeilenIndex][0]))
+                for InputZeilenElementIndex in range(0, len(inputlist[InputZeilenIndex])):
+                    if inputlist[InputZeilenIndex][InputZeilenElementIndex].type != chain[ChainZeilenIndex][0]:
+                        break
+
+        print("---------------------")
+
+    # outputlist = inputlist
 
     # Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
 

@@ -47,7 +47,7 @@ Here are the Objects:
 +----------------------------+----------------------------+
 |        Object              |        Use                 |
 +============================+============================+
-|``translator.add(a, b, x)`` |  Ads/divides/multiplies/   |
+|``translator.add(a, b, x)`` |  Adds/divides/multiplies/  |
 |``translator.mul(a, b, x)`` |  subtracts ore modules     |
 |``translator.div(a, b, x)`` |  two numbers and stores    |
 |``translator.sub(a, b, x)`` |  it in x.                  |

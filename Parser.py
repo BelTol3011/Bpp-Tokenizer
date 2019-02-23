@@ -111,6 +111,14 @@ def concatenate(input_list):
             stringstring += current_letter
             continue
 
+        if current_letter == "#" and (not string):
+            del input_list[0]
+            if input_list[0] == " ":
+                del input_list[0]
+            comment = "".join(input_list)
+            output_list.append(("comment", comment))
+            break
+
         # print(current_letter, current_type)
         if current_letter == "":
             break
@@ -135,7 +143,7 @@ def Pars(inlist):
     for line in inlist:
         _outlist.append(concatenate(list(line)))
 
-    # print(_outlist)
+    print(_outlist)
     outlist = []
     for line in _outlist:
         temp = []

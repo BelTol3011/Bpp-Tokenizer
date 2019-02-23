@@ -1,4 +1,5 @@
 import sys
+
 import Parser
 import Tokenize
 
@@ -12,7 +13,6 @@ arguments = sys.argv
 
 print(arguments)
 
-
 if arguments[0] == "python" or arguments[0] == "python3": del arguments[0]
 
 filename = arguments[1]
@@ -24,3 +24,6 @@ infile = open(filename)
 inlist = infile.read().split("\n")
 print("Parsing...")
 parsed = Parser.Pars(inlist)
+print("Tokenizing...")
+tokenized = Tokenize.tokenize(inlist)
+print(tokenized)

@@ -19,6 +19,13 @@ class Compare_Operant:
         self.data = type
 
 
+class Calc_Operant:
+    type = "Calc_Operant"
+
+    def __init__(self, type):
+        self.data = type
+
+
 class Name:
     type = "Name"
 
@@ -94,7 +101,8 @@ def is_type(x):
 
 
 classregister = {"Operant": Operant, "Compare_Operant": Compare_Operant, "name": Name, "space": Space,
-                 "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot}
+                 "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot,
+                 "Calc_Operant": Calc_Operant}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]
 calc_operants = ["+", "-", "*", "/", "%"]

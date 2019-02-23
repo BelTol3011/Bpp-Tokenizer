@@ -27,5 +27,4 @@ print("Parsing...")
 parsed = Parser.Pars(inlist)
 print("Tokenizing...")
 tokenized = Tokenize.tokenize(parsed)
-print(tokenized)
-a = [Tokenize.tokenize]
+#print(tokenized)

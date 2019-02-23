@@ -65,11 +65,12 @@ Here are the Objects:
 |``translator.mod(a, b, x)`` |                            |
 +----------------------------+----------------------------+
 |``translator.prt(str)``     |  Prints a string.          |
+|``translator.vrt(var)``     |  Prints a variable.        |
 +----------------------------+----------------------------+
 |``translator.vdd(a, b, x)`` |  Adds/divides/multiplies/  |
 |``translator.vul(a, b, x)`` |  subtracts or modules      |
-|``translator.viv(a, b, x)`` |  two variabled or floats   |
-|``translator.vub(a, b, x)`` |  and stores it in x.       |
+|``translator.viv(a, b, x)`` |  two variables and stores  |
+|``translator.vub(a, b, x)`` |  it in x.                  |
 |``translator.vod(a, b, x)`` |                            |
 +----------------------------+----------------------------+
 |                            |                            |

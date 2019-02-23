@@ -71,4 +71,4 @@ The Tokenize function returns a list of tupels, wich contain at the first index 
              **Do** store them like this: ``(translator.add, [a, b, x])``
              You have to leave out the parantheses.
 
-the second index is the list of arguments to this function.
+The second index is the list of arguments to this function.

@@ -1,4 +1,7 @@
 #bla
+b=4
 string = "asdasdasdas"
 integer = 3
 float = 0.65234787346563728
+a=b-1
+b = a

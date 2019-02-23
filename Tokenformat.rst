@@ -41,7 +41,7 @@ The main job of the Tokenizer is it, to simplify the code:
 
                 This: ``a=b*4-2`` to ``x=b*4`` ``y=x-2`` ``a=y``
 
-Like I said before, these objects control the translator
+Like I said before, these objects control the translator.
 Here are the Objects:
 
 +----------------------------+----------------------------+

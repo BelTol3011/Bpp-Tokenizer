@@ -96,9 +96,11 @@ def tokenize(inputlist):
             if len(inputlist[InputZeilenIndex]) == len(chain[ChainZeilenIndex][0]):
                 print(chain[ChainZeilenIndex][0], " ", len(inputlist[InputZeilenIndex]), " ", len(chain[ChainZeilenIndex][0]))
                 for InputZeilenElementIndex in range(0, len(inputlist[InputZeilenIndex])):
-                    if inputlist[InputZeilenIndex][InputZeilenElementIndex].type != chain[ChainZeilenIndex][0]:
+                    if inputlist[InputZeilenIndex][InputZeilenElementIndex].type != chain[ChainZeilenIndex][0][InputZeilenElementIndex]:
+                        print("Skip")
                         break
-
+                    else: #InputZeilenElementIndex == len(inputlist[InputZeilenIndex]):
+                        print("-->", chain[ChainZeilenIndex][1])
         print("---------------------")
 
     # outputlist = inputlist

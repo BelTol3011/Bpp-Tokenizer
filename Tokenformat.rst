@@ -65,6 +65,7 @@ Here are the Objects:
 |``translator.mod(a, b, x)`` |                            |
 +----------------------------+----------------------------+
 |``translator.prt(str)``     |  Prints a string.          |
+|``translator.vrt(var)``     |  Prints a variable.        |
 +----------------------------+----------------------------+
 |``translator.vdd(a, b, x)`` |  Adds/divides/multiplies/  |
 |``translator.vul(a, b, x)`` |  subtracts or modules      |

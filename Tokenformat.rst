@@ -65,9 +65,9 @@ Here are the Objects:
 |                            |                            |
 +----------------------------+----------------------------+
 
-The Tokenize function returns a list of tupels, wich contain in the firs index the function.
+The Tokenize function returns a list of tupels, wich contain at the first index the function.
 
-.. warning:: Do **not** store these functions like this: ``(tranlator.mul(), [a, b, x])``
+.. warning:: Do **not** store these functions like this: ``(tranlator.mul(), [a, b, x])``.
              **Do** store them like this: ``(translator.add, [a, b, x])``
              You have to leave out the parantheses.
 

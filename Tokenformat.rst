@@ -45,7 +45,7 @@ Like I said before, these objects control the translator.
 Here are the Objects:
 
 +----------------------------+----------------------------+
-|        Object              |        Use                 |
+|        Function            |        Use                 |
 +============================+============================+
 |``translator.add(a, b, x)`` |  Adds/divides/multiplies/  |
 |``translator.mul(a, b, x)`` |  subtracts ore modules     |

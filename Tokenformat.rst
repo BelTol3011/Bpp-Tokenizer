@@ -59,13 +59,19 @@ Here are the Objects:
 |        Function            |        Use                 |
 +============================+============================+
 |``translator.add(a, b, x)`` |  Adds/divides/multiplies/  |
-|``translator.mul(a, b, x)`` |  subtracts ore modules     |
-|``translator.div(a, b, x)`` |  two numbers and stores    |
-|``translator.sub(a, b, x)`` |  it in x.                  |
+|``translator.mul(a, b, x)`` |  subtracts or modules      |
+|``translator.div(a, b, x)`` |  two integers or floats    |
+|``translator.sub(a, b, x)`` |  and stores it in x.       |
 |``translator.mod(a, b, x)`` |                            |
 +----------------------------+----------------------------+
-|``translator.prt(str)``     |  Prints a string           |
-|                            |                            |
+|``translator.prt(str)``     |  Prints a string.          |
++----------------------------+----------------------------+
+|``translator.vdd(a, b, x)`` |  Adds/divides/multiplies/  |
+|``translator.vul(a, b, x)`` |  subtracts or modules      |
+|``translator.viv(a, b, x)`` |  two variabled or floats   |
+|``translator.vub(a, b, x)`` |  and stores it in x.       |
+|``translator.vod(a, b, x)`` |                            |
++----------------------------+----------------------------+
 |                            |                            |
 |                            |                            |
 |                            |                            |

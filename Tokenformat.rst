@@ -30,6 +30,16 @@ It looks like This:
 
 You can use ``object.type`` to view its type and ``object.data`` to look at the data.
 
+The object types are:
+
+* Operant
+* Space
+* Compare_Operant
+* Name
+* Integer
+* Comment
+* Parantheses
+* String
 
 -----
  Out

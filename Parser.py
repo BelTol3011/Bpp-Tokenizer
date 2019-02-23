@@ -1,55 +1,51 @@
 import Tokenize
 
 
-class Operant():
+class Operant:
     type = "Operant"
 
     def __init__(self, type):
         self.data = type
 
 
-class Space():
+class Space:
     type = "Space"
 
     def __init__(self, space=" "):
         self.data = space
 
 
-class Compare_Operant():
+class Compare_Operant:
     type = "Compare_Operant"
 
     def __init__(self, type):
         self.data = type
 
 
-class Name():
+class Name:
     type = "Name"
 
     def __init__(self, name):
         self.data = name
 
 
-class Integer():
+class Integer:
     type = "Integer"
 
     def __init__(self, int):
         self.data = int
 
 
-class Comment():
+class Comment:
     type = "Comment"
 
     def __init__(self, comment):
         self.data = comment
 
-class Parantheses():
-    type = "Parantheses"
-    def __init__(self, paran):
-        self.data = paran
 
-
-class Parantheses():
+class Parantheses:
     type = "Parantheses"
+
     def __init__(self, paran):
         self.data = paran
 
@@ -63,11 +59,14 @@ def is_type(x):
         return "space"
     elif x in "()":
         return "parants"
+    elif x in "1234567890":
+        return "integer"
     else:
         return "name"
 
 
-classregister = {"Operant": Operant, "Compare_Operant": Compare_Operant, "name": Name, "space": Space, "parants":Parantheses}
+classregister = {"Operant": Operant, "Compare_Operant": Compare_Operant, "name": Name, "space": Space,
+                 "parants": Parantheses, "integer": Integer}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]
 calc_operants = ["+", "-", "*", "/", "%"]
@@ -102,7 +101,7 @@ def concatenate(input_list):
 
 
 def Pars(inlist):
-    #print(inlist)
+    # print(inlist)
     _outlist = []
     for line in inlist:
         _outlist.append(concatenate(list(line)))
@@ -114,15 +113,8 @@ def Pars(inlist):
         for tupel in line:
             type = tupel[0]
             arg = tupel[1]
-           # print(arg)
+            # print(arg)
             temp.append(classregister[type](arg))
         outlist.append(temp)
     print(outlist)
     return outlist
-
-
-testlist = [
-    [Name("a"), Operant("="), Integer(1)]
-]
-
-Tokenize.tokenize(testlist)

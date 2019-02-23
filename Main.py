@@ -1,7 +1,8 @@
 import sys
-
 import Parser
 import Tokenize
+import Translators.Minecraft_1_13_Commands as translator
+
 
 # Kriegt Dateinamen un outputnamen als Argumente.
 # ZU kompiliertem File
@@ -27,3 +28,4 @@ parsed = Parser.Pars(inlist)
 print("Tokenizing...")
 tokenized = Tokenize.tokenize(parsed)
 print(tokenized)
+a = [Tokenize.tokenize]

@@ -11,7 +11,7 @@ import Tokenize
 
 arguments = sys.argv
 
-print(arguments)
+#print(arguments)
 
 if arguments[0] == "python" or arguments[0] == "python3": del arguments[0]
 
@@ -24,7 +24,6 @@ infile = open(filename)
 inlist = infile.read().split("\n")
 print("Parsing...")
 parsed = Parser.Pars(inlist)
-print(parsed)
 print("Tokenizing...")
 tokenized = Tokenize.tokenize(parsed)
 print(tokenized)

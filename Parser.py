@@ -74,7 +74,7 @@ def is_type(x):
     elif x in compare_operants:
         return "Compare_Operant"
     elif x in calc_operants:
-        return "Calc_"
+        return "Calc_Operant"
     elif x == " " or x == "":
         return "space"
     elif x in "()":

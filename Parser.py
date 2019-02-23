@@ -116,5 +116,4 @@ def Pars(inlist):
             # print(arg)
             temp.append(classregister[type](arg))
         outlist.append(temp)
-    print(outlist)
     return outlist

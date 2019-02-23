@@ -2,7 +2,7 @@
   Todo
 ========
 
-:author: Bela Tollkien and Johannes Blickensdorff
+:author: Bela T. and Johannes B.
 
 
 .. contents::

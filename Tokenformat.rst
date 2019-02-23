@@ -34,7 +34,7 @@ You can use ``object.type`` to view its type and ``object.data`` to look at the 
 -----
  Out
 -----
-Out comes a list of objects. These object control the translator at the end.
+Out comes a list of objects. These objects control the translator at the end.
 The main job of the Tokenizer is it, to simplify the code:
 
 .. admonition:: For example

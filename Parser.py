@@ -106,7 +106,7 @@ def Pars(inlist):
     for line in inlist:
         _outlist.append(concatenate(list(line)))
 
-    print(_outlist)
+    #print(_outlist)
     outlist = []
     for line in _outlist:
         temp = []

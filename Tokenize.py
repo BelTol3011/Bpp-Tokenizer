@@ -16,18 +16,12 @@ arguments = sys.argv
 
 # Objektfolgen:
 # [Comment] -> Kommentar
+# [Var_Name,Operant'=',Integer]  -> Zuweisung.Integer
+# [Var_Name,Operant'=',Var_Name] -> Zuweisung.Variable
+# [Var_Name,Space,Operant'=',Space,Integer]  -> Zuweisung.Integer
+# [Var_Name,Space,Operant'=',Space,Var_Name] -> Zuweisung.Variable
 
-# ist "Name" ein "Var_Name" oder "Fun_Name"
-
-# [Var_Name,Operant'=',Integer]   -> Zuweisung.Integer
-# [Var_Name,Operant'=',Var_Name]  -> Zuweisung.Variable
-
-# Einfache Operationen: "a=b+1", "a+=b", "a=a+1"
-# [Var_Name,Operant'=',Var_Name,Operant='+',Integer] -> Zuweisung.Addition
-# [Var_Name,Operant'=',Var_Name,Operant='-',Integer] -> Zuweisung.Subtraktion
-# [Var_Name,Operant'=',Var_Name,Operant='/',Integer] -> Zuweisung.Division
-# [Var_Name,Operant'=',Var_Name,Operant='*',Integer] -> Zuweisung.Multiplikation
-
+# Einfache Operationen "a+=1", "a+=b"
 # [Var_Name,Operant'+=',Var_Name]   -> Zuweisung.Addition
 # [Var_Name,Operant'+=',Integer]    -> Zuweisung.Addition
 # [Var_Name,Operant'*=',Var_Name]   -> Zuweisung.Multiplikation
@@ -36,25 +30,52 @@ arguments = sys.argv
 # [Var_Name,Operant'/=',Integer]    -> Zuweisung.Division
 # [Var_Name,Operant'-=',Var_Name]   -> Zuweisung.Subtraktion
 # [Var_Name,Operant'-=',Integer]    -> Zuweisung.Subtraktion
+# Einfache Operationen, mit Space: "a += 1", "a += b"
+# [Var_Name,Space,Operant'+=',Space,Var_Name]   -> Zuweisung.Addition
+# [Var_Name,Space,Operant'+=',Space,Integer]    -> Zuweisung.Addition
+# [Var_Name,Space,Operant'*=',Space,Var_Name]   -> Zuweisung.Multiplikation
+# [Var_Name,Space,Operant'*=',Space,Integer]    -> Zuweisung.Multiplikation
+# [Var_Name,Space,Operant'/=',Space,Var_Name]   -> Zuweisung.Division
+# [Var_Name,Space,Operant'/=',Space,Integer]    -> Zuweisung.Division
+# [Var_Name,Space,Operant'-=',Space,Var_Name]   -> Zuweisung.Subtraktion
+# [Var_Name,Space,Operant'-=',Space,Integer]    -> Zuweisung.Subtraktion
+
+# Einfache Operationen: "a=b+1", "a= a/b", "a=a*1"
+# [Var_Name,Operant'=',Var_Name,Operant='+',Integer] -> Zuweisung.Addition
+# [Var_Name,Operant'=',Var_Name,Operant='-',Integer] -> Zuweisung.Subtraktion
+# [Var_Name,Operant'=',Var_Name,Operant='/',Integer] -> Zuweisung.Division
+# [Var_Name,Operant'=',Var_Name,Operant='*',Integer] -> Zuweisung.Multiplikation
+# Einfache Operationen, mit Space: "a = a + 1"
+# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='+',Space, Integer] -> Zuweisung.Addition
+# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='-',Space, Integer] -> Zuweisung.Subtraktion
+# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='/',Space, Integer] -> Zuweisung.Division
+# [Var_Name,Space,Operant'=',Space,Var_Name,Operant='*',Space, Integer] -> Zuweisung.Multiplikation
 
 # Einfache Operationen, Argumente vertauscht: "a=1+b"
 # [Var_Name,Operant'=',Integer,Operant='+',Var_Name] -> Zuweisung.Addition
 # [Var_Name,Operant'=',Integer,Operant='-',Var_Name] -> Zuweisung.Subtraktion
 # [Var_Name,Operant'=',Integer,Operant='/',Var_Name] -> Zuweisung.Division
 # [Var_Name,Operant'=',Integer,Operant='*',Var_Name] -> Zuweisung.Multiplikation
+# Einfache Operationen, Argumente vertauscht: "a = 1 + b"
+# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='+',Space,Var_Name] -> Zuweisung.Addition
+# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='-',Space,Var_Name] -> Zuweisung.Subtraktion
+# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='/',Space,Var_Name] -> Zuweisung.Division
+# [Var_Name,Space,Operant'=',Space,Integer,Space,Operant='*',Space,Var_Name] -> Zuweisung.Multiplikation
 
 
+# tbd: ist "Name" ein "Var_Name" oder "Fun_Name"
 
-#funtkionaufruf: prüfen ob var_name oder fun_name
 #if schleifen
 #
-
 
 def tokenize(inputlist):
     for line in inputlist:
         for objekt in line:
             print(objekt.data, objekt.type)
+        print("newlne")
 
+
+    #debug
     outputlist = inputlist
 
 

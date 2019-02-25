@@ -1,8 +1,9 @@
+import time
+
+t1 = time.time()
 import sys
 import Parser
 import Tokenize
-import Translators.Minecraft_1_13_Commands as translator
-
 
 # Kriegt Dateinamen un outputnamen als Argumente.
 # ZU kompiliertem File
@@ -12,7 +13,7 @@ import Translators.Minecraft_1_13_Commands as translator
 
 arguments = sys.argv
 
-#print(arguments)
+# print(arguments)
 
 if arguments[0] == "python" or arguments[0] == "python3": del arguments[0]
 
@@ -27,4 +28,8 @@ print("Parsing...")
 parsed = Parser.Pars(inlist)
 print("Tokenizing...")
 tokenized = Tokenize.tokenize(parsed)
-#print(tokenized)
+# print(tokenized)
+
+
+print("------------------------")
+print("Time Elapsed: ", time.time() - t1)

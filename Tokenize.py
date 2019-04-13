@@ -83,7 +83,7 @@ def tokenize(inputlist):
     # print(inputlist)
     for InputZeilenIndex in range(0, len(inputlist)):  # Line
         print(inputlist[InputZeilenIndex], "| Inputline")
-
+        type = "No type found"
         for ChainZeilenIndex in range(0, len(chain)):
 
             if len(inputlist[InputZeilenIndex]) == len(chain[ChainZeilenIndex][0]):
@@ -93,7 +93,8 @@ def tokenize(inputlist):
                         print("Skip")
                         break
                     else: #InputZeilenElementIndex == len(inputlist[InputZeilenIndex]):
-                        print("-->", chain[ChainZeilenIndex][1])
+                        type = chain[ChainZeilenIndex][1]
+        print("-->", type)
         print("---------------------")
 
     # outputlist = inputlist

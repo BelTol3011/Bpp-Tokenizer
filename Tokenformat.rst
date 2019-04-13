@@ -55,6 +55,9 @@ The main job of the Tokenizer is it, to simplify the code:
 Like I said before, these objects control the translator.
 Here are the Objects:
 
+
+Outdated:
+
 +----------------------------+----------------------------+
 |        Function            |        Use                 |
 +============================+============================+
@@ -82,6 +85,14 @@ Here are the Objects:
 |                            |                            |
 |                            |                            |
 +----------------------------+----------------------------+
+
+
+===========================  ===========================
+Function                     Meaning
+===========================  ===========================
+asd
+
+===========================  ===========================
 
 The Tokenize function returns a list of tupels. These tupels contain at the first index the function.
 

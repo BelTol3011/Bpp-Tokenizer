@@ -20,7 +20,7 @@ It looks like This:
 
 ``]``
 
-.. note:: That I also could write it like This:
+.. note:: that I also could write it like This:
           ``[[object, object, object],[object, object]]``
 
 

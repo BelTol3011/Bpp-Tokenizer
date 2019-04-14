@@ -71,13 +71,10 @@ arguments = sys.argv
 
 def tokenize(inputlist):
     chain = [
-        (["Comment", "Name"], "Kommentar"),  # -> Kommentar
+        (["Comment"], "Kommentar"),  # -> Kommentar
         (["Name", "Operant", "Integer"], "Zuweisung.Integer"),  # -> Zuweisung.Integer
         (["Name", "Operant", "Name"], "Zuweisung.Variable"),  # -> Zuweisung.Variable
-        (["Name", "Space", "Operant", "Space", "Integer"], "Zuweisung.Integer"),
-        # -> Zuweisung.Integer
-        ([Parser.Name, Parser.Space, Parser.Operant, Parser.Space, Parser.Name], "Zuweisung.Variable"),
-        # -> Zuweisung.Variable
+        (["Name", "Operant", "String"], "Zuweisung.String")
     ]
 
     # print(inputlist)
@@ -88,12 +85,14 @@ def tokenize(inputlist):
 
             if len(inputlist[InputZeilenIndex]) == len(chain[ChainZeilenIndex][0]):
                 print(chain[ChainZeilenIndex][0], " ", len(inputlist[InputZeilenIndex]), " ", len(chain[ChainZeilenIndex][0]))
+                canceled = True
                 for InputZeilenElementIndex in range(0, len(inputlist[InputZeilenIndex])):
                     if inputlist[InputZeilenIndex][InputZeilenElementIndex].type != chain[ChainZeilenIndex][0][InputZeilenElementIndex]:
-                        print("Skip")
+                        canceled = False
                         break
-                    else: #InputZeilenElementIndex == len(inputlist[InputZeilenIndex]):
-                        type = chain[ChainZeilenIndex][1]
+                if canceled:
+                    type = chain[ChainZeilenIndex][1]
+
         print("-->", type)
         print("---------------------")
 

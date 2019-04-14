@@ -75,6 +75,13 @@ class Dot:
         self.data = paran
 
 
+class Seperator:
+    type = "Seperator"
+
+    def __init__(self, paran):
+        self.data = paran
+
+
 def is_type(x):
     if x in operants:
         return "Operant"
@@ -94,15 +101,15 @@ def is_type(x):
         return "quot_mark"
     elif x == "#":
         return "comment"
-    elif x == ",":
-        return "coma"
+    elif x == "," or x == ";":
+        return "comma"
     else:
         return "name"
 
 
-classregister = {"Operant": Operant, "Compare_Operant": Compare_Operant, "name": Name, "space": Space,
+classregister = {"operant": Operant, "compare_Operant": Compare_Operant, "name": Name, "space": Space,
                  "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot,
-                 "Calc_Operant": Calc_Operant}
+                 "calc_Operant": Calc_Operant, "seperator": Seperator}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]
 calc_operants = ["+", "-", "*", "/", "%"]
@@ -176,11 +183,58 @@ def Pars(inlist):
             temp.append(classregister[type](arg))
         outlist.append(temp)
 
+    # floating
+    print("concatenating floats..")
     for i in range(0, len(outlist)):
         for j in range(1, len(outlist[i]) - 1):
+
             if outlist[i][j - 1].type == "Integer" and outlist[i][j].type == "Dot" and outlist[i][j + 1].type == \
                     "Integer":
                 outlist[i][j] = Float(float(str(outlist[i][j - 1].data) + "." + str(outlist[i][j + 1].data)))
                 del outlist[i][j + 1]
                 del outlist[i][j - 1]
+
+    print("concatenating operants...")
+    for i in range(0, len(outlist)):
+        for j in range(0, len(outlist[i]) - 1):
+            if outlist[i][j].data \
+                    == "-" and outlist[i][j + 1].data == \
+                    "=":
+                outlist[i][j] = Operant("-=")
+                del outlist[i][j + 1]
+            elif outlist[i][j].data \
+                    == "+" and outlist[i][j + 1].data == \
+                    "=":
+                outlist[i][j] = Operant("+=")
+                del outlist[i][j + 1]
+            elif outlist[i][j].data \
+                    == "*" and outlist[i][j + 1].data == \
+                    "=":
+                outlist[i][j] = Operant("*=")
+                del outlist[i][j + 1]
+            elif outlist[i][j].data \
+                    == "/" and outlist[i][j + 1].data == \
+                    "=":
+                outlist[i][j] = Operant("/=")
+                del outlist[i][j + 1]
+            elif outlist[i][j].data \
+                    == "%" and outlist[i][j + 1].data == \
+                    "=":
+                outlist[i][j] = Operant("%=")
+                del outlist[i][j + 1]
+    print("removing spaces...")
+    new_outlist = []
+    for i in range(0, len(outlist)):
+        temp = []
+        for j in range(0, len(outlist[i])):
+            if outlist[i][j].type != "Space":
+                temp.append(outlist[i][j])
+        new_outlist.append(temp)
+    outlist = new_outlist
+
+    for line in outlist:
+        print()
+        for element in line:
+            print(element.type, element.data, end=", ")
+    print()
     return outlist

@@ -84,11 +84,11 @@ class Seperator:
 
 def is_type(x):
     if x in operants:
-        return "Operant"
+        return "operant"
     elif x in compare_operants:
-        return "Compare_Operant"
+        return "compare_Operant"
     elif x in calc_operants:
-        return "Calc_Operant"
+        return "calc_Operant"
     elif x == " " or x == "":
         return "space"
     elif x in "()":
@@ -102,7 +102,7 @@ def is_type(x):
     elif x == "#":
         return "comment"
     elif x == "," or x == ";":
-        return "comma"
+        return "seperator"
     else:
         return "name"
 

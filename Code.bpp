@@ -12,4 +12,3 @@ def Function(argument1, argument2, argument3=4):
 
 a = Function(1, 2)
 print(a)
-bool = True

@@ -4,6 +4,7 @@ float = 3.141592653589793238462643
 string = "Hallo Welt!!"
 bool = False
 float /= 1
+integer++
 condition = bool and True
 
 

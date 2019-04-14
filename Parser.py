@@ -222,6 +222,16 @@ def Pars(inlist):
                     "=":
                 outlist[i][j] = Operant("%=")
                 del outlist[i][j + 1]
+            elif outlist[i][j].data \
+                    == "-" and outlist[i][j + 1].data == \
+                    "-":
+                outlist[i][j] = Operant("--")
+                del outlist[i][j + 1]
+            elif outlist[i][j].data \
+                    == "+" and outlist[i][j + 1].data == \
+                    "+":
+                outlist[i][j] = Operant("++")
+                del outlist[i][j + 1]
     print("removing spaces...")
     new_outlist = []
     for i in range(0, len(outlist)):

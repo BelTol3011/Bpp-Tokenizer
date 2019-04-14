@@ -3,6 +3,7 @@ integer = 124567
 float = 3.141592653589793238462643
 string = "Hallo Welt!!"
 bool = False
+float /= 1
 condition = bool and True
 
 

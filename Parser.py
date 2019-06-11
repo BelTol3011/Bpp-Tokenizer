@@ -5,6 +5,13 @@ class Operant:
         self.data = type
 
 
+class Boolean:
+    type = "Boolean"
+
+    def __init__(self, type):
+        self.data = type
+
+
 class Space:
     type = "Space"
 
@@ -109,7 +116,7 @@ def is_type(x):
 
 classregister = {"operant": Operant, "compare_Operant": Compare_Operant, "name": Name, "space": Space,
                  "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot,
-                 "calc_Operant": Calc_Operant, "seperator": Seperator}
+                 "calc_Operant": Calc_Operant, "seperator": Seperator, "bool": Boolean}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]
 calc_operants = ["+", "-", "*", "/", "%"]
@@ -222,16 +229,15 @@ def Pars(inlist):
                     "=":
                 outlist[i][j] = Operant("%=")
                 del outlist[i][j + 1]
-            elif outlist[i][j].data \
-                    == "-" and outlist[i][j + 1].data == \
-                    "-":
-                outlist[i][j] = Operant("--")
-                del outlist[i][j + 1]
-            elif outlist[i][j].data \
-                    == "+" and outlist[i][j + 1].data == \
-                    "+":
-                outlist[i][j] = Operant("++")
-                del outlist[i][j + 1]
+
+    print("detecting bools...")
+    for i in range(0, len(outlist)):
+        for j in range(0, len(outlist[i])):
+            if outlist[i][j].data in ["True", "False"]:
+                outlist[i][j] = Boolean(outlist[i][j].data)
+
+
+
     print("removing spaces...")
     new_outlist = []
     for i in range(0, len(outlist)):

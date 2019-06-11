@@ -102,4 +102,4 @@ def tokenize(inputlist):
 
     # Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
 
-    return ""
+    return []

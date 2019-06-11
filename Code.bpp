@@ -6,7 +6,10 @@ bool = False
 float /= 1
 integer += 1
 condition = bool and True
+if condition:
+    print(integer)
 
+# Erst später
 
 def Function(argument1, argument2, argument3=4):
     return argument1 + argument2 * argument3

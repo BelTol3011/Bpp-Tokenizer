@@ -1,5 +1,8 @@
 testtokens = [("einfvaridefiinte", ["testint", 2342352]), ("prinvariinte", ["testint"])]
 
+def translate():
+    pass
+
 
 def einfvaridefiinte(*args):
     args = args[0]

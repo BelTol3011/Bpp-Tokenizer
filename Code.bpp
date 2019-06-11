@@ -11,6 +11,5 @@ condition = bool and True
 def Function(argument1, argument2, argument3=4):
     return argument1 + argument2 * argument3
 
-
 a = Function(1, 2)
 print(a)

@@ -3,10 +3,8 @@ import Parser
 
 arguments = sys.argv
 
-
 # Strg+Alt+L : Reformat
-#
-#
+##
 # Aufgaben:
 # bekommt eine 2D-Liste, geschachtelt mit Tupels
 # In Tokens umwandeln:
@@ -16,10 +14,8 @@ arguments = sys.argv
 
 # Objektfolgen:
 # [Comment] -> Kommentar
-# [Name,Operant'=',Integer]  -> Zuweisung.Integer
-# [Name,Operant'=',Name] -> Zuweisung.Variable
-# [Name,Space,Operant'=',Space,Integer]  -> Zuweisung.Integer
-# [Name,Space,Operant'=',Space,Name] -> Zuweisung.Variable
+# [Name,Operant'=',Integer]     -> Zuweisung.Integer
+# [Name,Operant'=',Name]        -> Zuweisung.Variable
 
 # Einfache Operationen "a+=1", "a+=b"
 # [Name,Operant'+=',Name]   -> Zuweisung.Addition
@@ -45,6 +41,7 @@ arguments = sys.argv
 # [Name,Operant'=',Name,Operant='-',Integer] -> Zuweisung.Subtraktion
 # [Name,Operant'=',Name,Operant='/',Integer] -> Zuweisung.Division
 # [Name,Operant'=',Name,Operant='*',Integer] -> Zuweisung.Multiplikation
+
 # Einfache Operationen, mit Space: "a = a + 1"
 # [Name,Space,Operant'=',Space,Name,Operant='+',Space, Integer] -> Zuweisung.Addition
 # [Name,Space,Operant'=',Space,Name,Operant='-',Space, Integer] -> Zuweisung.Subtraktion
@@ -56,6 +53,7 @@ arguments = sys.argv
 # [Name,Operant'=',Integer,Operant='-',Name] -> Zuweisung.Subtraktion
 # [Name,Operant'=',Integer,Operant='/',Name] -> Zuweisung.Division
 # [Name,Operant'=',Integer,Operant='*',Name] -> Zuweisung.Multiplikation
+
 # Einfache Operationen, Argumente vertauscht: "a = 1 + b"
 # [Name,Space,Operant'=',Space,Integer,Space,Operant='+',Space,Name] -> Zuweisung.Addition
 # [Name,Space,Operant'=',Space,Integer,Space,Operant='-',Space,Name] -> Zuweisung.Subtraktion
@@ -73,13 +71,17 @@ def tokenize(inputlist):
     chain = [
         (["Comment"], "Kommentar"),  # -> Kommentar
         (["Name", "Operant", "Integer"], "Zuweisung.Integer"),  # -> Zuweisung.Integer
-        (["Name", "Operant", "Name"], "Zuweisung.Variable"),  # -> Zuweisung.Variable
-        (["Name", "Operant", "String"], "Zuweisung.String")
+        (["Name", "Operant", "Name"], "Zuweisung.Variable"),    # -> Zuweisung.Variable
+        (["Name", "Operant", "String"], "Zuweisung.String")     # -> Zuweisung.String
+    #    (["Name", "Operant", "Name"], 'Zuweisung.Addition')     # -> Zuweisung.Addition
     ]
 
-    # print(inputlist)
+
+
+
+    print(inputlist)
     for InputZeilenIndex in range(0, len(inputlist)):  # Line
-        print(inputlist[InputZeilenIndex], "| Inputline")
+        print("Zeile: ", InputZeilenIndex," ",inputlist[InputZeilenIndex], "| Inputline")
         type = "No type found"
         for ChainZeilenIndex in range(0, len(chain)):
 

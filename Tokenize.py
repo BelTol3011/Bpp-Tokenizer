@@ -3,82 +3,54 @@ import Parser
 
 arguments = sys.argv
 debugflag = True
+#strg+alt+L
 
 def tokenize(Inputlist):
-
-  #  chain = [
-  #     (["Comment"], "Kommentar"),                             # -> Kommentar
-  #      (["Name", "Operant", "Integer"], "Zuweisung.Integer"),  # -> Zuweisung.Integer
-  #      (["Name", "Operant", "Name"], "Zuweisung.Variable"),    # -> Zuweisung.Variable
-  #      (["Name", "Operant", "String"], "Zuweisung.String")     # -> Zuweisung.String
-  #  ]
+    #  chain = [
+    #     (["Comment"], "Kommentar"),                             # -> Kommentar
+    #      (["Name", "Operant", "Integer"], "Zuweisung.Integer"),  # -> Zuweisung.Integer
+    #      (["Name", "Operant", "Name"], "Zuweisung.Variable"),    # -> Zuweisung.Variable
+    #      (["Name", "Operant", "String"], "Zuweisung.String")     # -> Zuweisung.String
+    #  ]
 
     SyntaxChain = [
-        ([("Comment",""),("",""),("","")], "Def.Comment"),
-        ([("Name", ""), ("Operant",  "="), ("Integer", "")], "Def.Variable.Integer"),
-        ([("Name", ""), ("Operant",  "="), ("Name", "")],    "Def.Variable.Variable"),
-
-        ([("Name", ""), ("Operant",  "="), ("Boolean", "")], "Zuweisung.Variable.Bool.Simple"),
-        ([("Name", ""), ("Operant",  "="), ("String", "")],  "Zuweisung.Variable.String.Simple"),
-        ([("Name", ""), ("Operant", "+="), ("Integer", "")], "Zuweisung.Variable.Integer.Add"),
-        ([("Name", ""), ("Operant", "-="), ("Integer", "")], "Zuweisung.Variable.Integer.Subst"),
-        ([("Name", ""), ("Operant", "/="), ("Integer", "")], "Zuweisung.Variable.Integer.Divide"),
-        ([("Name", ""), ("Operant", "*="), ("Integer", "")], "Zuweisung.Variable.Integer.Multiply")
+        ([("Comment", ""), ("", ""), ("", "")], "Def.Comment"),
+        ([("Name", ""), ("Operant", "="), ("Integer", "")], "Def.Variable.Integer"),
+        ([("Name", ""), ("Operant", "="), ("Name", "")], "Def.Variable.Variable"),
+        ([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable")
     ]
-
-
-#([("Comment", ""), ("", ""), ("", "")], "Kommentar"),
-#([("Name", ""), ("Operant", "="), ("Integer", "")], "Definition.Variable.Integer"),
-#([("Name", ""), ("Operant", "="), ("Name", "")], "Definition.Variable.Variable"),
-#([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable")([("Comment",""),("",""),("","")], "Kommentar"),
-# ([("Name", ""), ("Operant",  "="), ("Integer", "")], "Definition.Variable.Integer"),
-# ([("Name", ""), ("Operant", "="), ("Name", "")], "Definition.Variable.Variable"),
-# ([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable")
-
-
-
-
-
-
-
 
 
     for InputElementIndex in range(0, len(Inputlist)):  # Line
         print("bpp-ScriptZeile: ", InputElementIndex, " ", Inputlist[InputElementIndex])
-        type = "No type found"    #Ausgangszustand
-        #InputElementIndex = 0
+        type = "No type found"  # Ausgangszustand
+        # InputElementIndex = 0
         for ChainIndex in range(0, len(SyntaxChain)):
-            #print(SyntaxChain[ChainIndex][0][0], "  ", Inputlist[InputElementIndex])
+            # print(SyntaxChain[ChainIndex][0][0], "  ", Inputlist[InputElementIndex])
             if Inputlist[InputElementIndex][0].type == SyntaxChain[ChainIndex][0][0][0]:
-                #print("...")
-                type = SyntaxChain[ChainIndex][1] #ergebnis
+                # print("...")
+                type = SyntaxChain[ChainIndex][1]  # ergebnis
                 break
 
+            # print(SyntaxChain[ChainIndex][0][InputElementIndex][0])
+            # print(Inputlist[InputElementIndex].type)
 
+            # if SyntaxChain[ChainIndex][0][0][0] == Inputlist[InputElementIndex].type:
+            #   print(SyntaxChain[ChainIndex][0][0][0])
+            #  type = SyntaxChain[ChainIndex][1]
+            # break
 
-
-
-
-
-            #print(SyntaxChain[ChainIndex][0][InputElementIndex][0])
-            #print(Inputlist[InputElementIndex].type)
-
-            #if SyntaxChain[ChainIndex][0][0][0] == Inputlist[InputElementIndex].type:
-             #   print(SyntaxChain[ChainIndex][0][0][0])
-              #  type = SyntaxChain[ChainIndex][1]
-                #break
-
-         #   if len(Inputlist[InputElementIndex]) == len(chain[ChainZeilenIndex][0]):
-         #      #print(chain[ChainZeilenIndex][0], " ", len(Inputlist[InputElementIndex]), " ", len(chain[ChainZeilenIndex][0]))
-         #      canceled = True
-         #   for InputElementIndex in range(0, len(Inputlist[InputElementIndex])):
-                    # print(Inputlist[InputElementIndex][InputZeilenElementIndex].type)
-                  # print(SyntaxChain[ChainZeilenIndex][0][0][0])
-                  # if Inputlist[InputElementIndex][InputZeilenElementIndex].type != SyntaxChain[ChainZeilenIndex][0][InputZeilenElementIndex][0]:
-                  #      canceled = False  #wenn noch nicht gefunden, wird nicht abgebrochen
-                  #      break
-               # if canceled:
-                #   type = SyntaxChain[ChainIndex][0][0][0]
+        #   if len(Inputlist[InputElementIndex]) == len(chain[ChainZeilenIndex][0]):
+        #      #print(chain[ChainZeilenIndex][0], " ", len(Inputlist[InputElementIndex]), " ", len(chain[ChainZeilenIndex][0]))
+        #      canceled = True
+        #   for InputElementIndex in range(0, len(Inputlist[InputElementIndex])):
+        # print(Inputlist[InputElementIndex][InputZeilenElementIndex].type)
+        # print(SyntaxChain[ChainZeilenIndex][0][0][0])
+        # if Inputlist[InputElementIndex][InputZeilenElementIndex].type != SyntaxChain[ChainZeilenIndex][0][InputZeilenElementIndex][0]:
+        #      canceled = False  #wenn noch nicht gefunden, wird nicht abgebrochen
+        #      break
+        # if canceled:
+        #   type = SyntaxChain[ChainIndex][0][0][0]
 
         print("-->", type)
         print("---------------------")
@@ -87,8 +59,6 @@ def tokenize(Inputlist):
     # Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
 
     return []
-
-
 
 #    print(Inputlist)
 #    for InputElementIndex in range(0, len(Inputlist)):  # Line
@@ -107,7 +77,6 @@ def tokenize(Inputlist):
 #
 #        print("-->", type)
 #        print("---------------------")
-
 
 
 # Strg+Alt+L : Reformat

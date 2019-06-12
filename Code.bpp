@@ -1,18 +1,19 @@
 # Comment
 integer = 124567
-float = 3.141592653589793238462643
-string = "Hallo Welt!!"
-bool = False
-float /= 1
-integer += 1
-condition = bool and True
-if condition:
-    print(integer)
+a = integer
+# float = 3.141592653589793238462643
+# string = "Hallo Welt!!"
+# bool = False
+# float /= 1
+# integer += 1
+# condition = bool and True
+# if condition:
+#     print(integer)
 
 # Erst später
 
-def Function(argument1, argument2, argument3=4):
-    return argument1 + argument2 * argument3
+# def Function(argument1, argument2, argument3=4):
+#     return argument1 + argument2 * argument3
 
-a = Function(1, 2)
+# a = Function(1, 2)
 print(a)

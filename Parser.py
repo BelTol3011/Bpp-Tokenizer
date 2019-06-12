@@ -54,8 +54,8 @@ class Comment:
         self.data = comment
 
 
-class Parantheses:
-    type = "Parantheses"
+class Parentheses:
+    type = "Parentheses"
 
     def __init__(self, paran):
         self.data = paran
@@ -115,7 +115,7 @@ def is_type(x):
 
 
 classregister = {"operant": Operant, "compare_Operant": Compare_Operant, "name": Name, "space": Space,
-                 "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot,
+                 "parants": Parentheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot,
                  "calc_Operant": Calc_Operant, "seperator": Seperator, "bool": Boolean}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]

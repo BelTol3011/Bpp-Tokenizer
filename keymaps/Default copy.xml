@@ -1,0 +1,5 @@
+<keymap version="1" name="Default copy" parent="$default">
+  <action id="CommentByBlockComment">
+    <keyboard-shortcut first-keystroke="shift ctrl dead_acute" />
+  </action>
+</keymap>

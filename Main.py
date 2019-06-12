@@ -3,7 +3,7 @@ import time
 
 import Parser
 import Tokenize
-import ask
+#import ask
 
 t1 = time.time()
 
@@ -48,6 +48,3 @@ outcode = tr.translate(tokens)
 for line in outcode:
     print(line)
 
-# a = [
-#    ([("Name", "any"), ("Operant", "="), ("Integer", "any")], "einfvaridefiinte")
-# ]

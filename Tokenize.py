@@ -14,9 +14,10 @@ def tokenize(Inputlist):
   #  ]
 
     SyntaxChain = [
-        ([("Comment",""),("",""),("","")], "Kommentar"),
-        ([("Name", ""), ("Operant",  "="), ("Integer", "")], "Zuweisung.Variable.Integer.Simple"),
-        ([("Name", ""), ("Operant",  "="), ("Float", "")],   "Zuweisung.Variable.Float.Simple"),
+        ([("Comment",""),("",""),("","")], "Def.Comment"),
+        ([("Name", ""), ("Operant",  "="), ("Integer", "")], "Def.Variable.Integer"),
+        ([("Name", ""), ("Operant",  "="), ("Name", "")],    "Def.Variable.Variable"),
+
         ([("Name", ""), ("Operant",  "="), ("Boolean", "")], "Zuweisung.Variable.Bool.Simple"),
         ([("Name", ""), ("Operant",  "="), ("String", "")],  "Zuweisung.Variable.String.Simple"),
         ([("Name", ""), ("Operant", "+="), ("Integer", "")], "Zuweisung.Variable.Integer.Add"),
@@ -24,6 +25,23 @@ def tokenize(Inputlist):
         ([("Name", ""), ("Operant", "/="), ("Integer", "")], "Zuweisung.Variable.Integer.Divide"),
         ([("Name", ""), ("Operant", "*="), ("Integer", "")], "Zuweisung.Variable.Integer.Multiply")
     ]
+
+
+#([("Comment", ""), ("", ""), ("", "")], "Kommentar"),
+#([("Name", ""), ("Operant", "="), ("Integer", "")], "Definition.Variable.Integer"),
+#([("Name", ""), ("Operant", "="), ("Name", "")], "Definition.Variable.Variable"),
+#([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable")([("Comment",""),("",""),("","")], "Kommentar"),
+# ([("Name", ""), ("Operant",  "="), ("Integer", "")], "Definition.Variable.Integer"),
+# ([("Name", ""), ("Operant", "="), ("Name", "")], "Definition.Variable.Variable"),
+# ([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable")
+
+
+
+
+
+
+
+
 
     for InputElementIndex in range(0, len(Inputlist)):  # Line
         print("bpp-ScriptZeile: ", InputElementIndex, " ", Inputlist[InputElementIndex])

@@ -7,8 +7,8 @@ print(a)
 
 # float = 3.141592653589793238462643
 # string = "Hallo Welt!!"
-bool = False
-float /= 1
+# bool = False
+# float /= 1
 # integer += 1
 # condition = bool and True
 # if condition:

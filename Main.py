@@ -1,6 +1,6 @@
 import sys
 import time
-
+import ask
 import Parser
 import Tokenize
 #import ask

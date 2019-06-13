@@ -1,102 +1,55 @@
-import sys
-import Parser
-
-arguments = sys.argv
 debugflag = True
 
 
 # strg+alt+L
 
 def tokenize(Inputlist):
-    #  chain = [
-    #     (["Comment"], "Kommentar"),                             # -> Kommentar
-    #      (["Name", "Operant", "Integer"], "Zuweisung.Integer"),  # -> Zuweisung.Integer
-    #      (["Name", "Operant", "Name"],    "Zuweisung.Variable"),    # -> Zuweisung.Variable
-    #      (["Name", "Operant", "String"], "Zuweisung.String")     # -> Zuweisung.String
-    #  ]
-
     SyntaxChain = [
-        ([("Comment", ""), ("", ""), ("", "")], "Def.Comment"),
-        ([("Name", ""), ("Operant", "="), ("Integer", "")], "Def.Variable.Integer"),
-        ([("Name", ""), ("Operant", "="), ("Name", "")], "Def.Variable.Variable"),
-        ([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable")
+        ([("Comment", "")], "Def.Comment", [0]),
+        ([("Name", ""), ("Operant", "="), ("Integer", "")], "Def.Variable.Integer", [0, 2]),
+        ([("Name", ""), ("Operant", "="), ("Name", "")], "Def.Variable.Variable", [0, 2]),
+        ([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable", [2])
     ]
+    outlist = []
+    debug = debugflag
+    for ZeilenIndex in range(0, len(Inputlist)):
+        print("Zeile:", Inputlist[ZeilenIndex])
+        outTok = "No Type Found!"
 
-    for InputZeilenIndex in range(0, len(Inputlist)):  # Anzahl Lines
-        print("bpp-ScriptZeile: ", InputZeilenIndex, " ", Inputlist[InputZeilenIndex])
+        for SyntaxChainIndex in range(0, len(SyntaxChain)):
+            if debug: print(SyntaxChain[SyntaxChainIndex][0])
+            if debug: print("Comparing:", len(Inputlist[ZeilenIndex]), len(SyntaxChain[SyntaxChainIndex][0]))
+            if len(Inputlist[ZeilenIndex]) == len(SyntaxChain[SyntaxChainIndex][0]):
+                works = True
+                for ObjectAndSyntaxChainIndex in range(0, len(Inputlist[ZeilenIndex])):
+                    if debug: print("ObjectAndSyntaxChainIndex", ObjectAndSyntaxChainIndex)
+                    currentZeilenObject = Inputlist[ZeilenIndex][ObjectAndSyntaxChainIndex]
+                    currentSyntaxObject = SyntaxChain[SyntaxChainIndex][0][ObjectAndSyntaxChainIndex]
+                    if currentSyntaxObject[0] != "":
+                        if currentSyntaxObject[0] != currentZeilenObject.type:
+                            works = False
+                    if currentSyntaxObject[1] != "":
+                        if currentSyntaxObject[1] != currentZeilenObject.data:
+                            works = False
+                if works:
+                    outTok = SyntaxChain[SyntaxChainIndex][1]
+                    for RegelIndex in range(0, len(SyntaxChain)):
+                        if SyntaxChain[RegelIndex][1] == outTok:
+                            outTokindex = RegelIndex
+                    if debug: print("OutTokIndex", outTokindex)
 
-        #InputZeilenElementIndex = 0
-
-        for InputZeilenElementIndex in range(0, len(Inputlist[InputZeilenIndex])):  # Anzahl Elemente in Input-Line
-            OutType = "No type found"  # Ausgangszustand
-            InType  = Inputlist[InputZeilenIndex][InputZeilenElementIndex].type
-            print("Level_in...:", InputZeilenElementIndex, " ", InType)
-
-            for ChainIndex in range(0, len(SyntaxChain)):  #Zeilen
-                for ChainElement in range(0, len(SyntaxChain[ChainIndex][0])):    #Elementweise
-                    print("ChainIndex: ", ChainIndex, " ChainElement: ", ChainElement, " ", SyntaxChain[ChainIndex][0][ChainElement][0])
-                    if SyntaxChain[ChainIndex][0][ChainElement][0] == InType:
-                        OutType = SyntaxChain[ChainIndex][1]  # Ergebnis
-
-                    else:
-                        break
-                # print(SyntaxChain[ChainIndex][0][ChainElement][0])
-
-               # if Inputlist[InputZeilenIndex][InputZeilenElementIndex].type == SyntaxChain[ChainIndex][0][0][0]:
-                #    print("Level_00...:", Inputlist[InputZeilenIndex][InputZeilenElementIndex].type)
-
-                 #   type = SyntaxChain[ChainIndex][1]  # Ergebnis
-                    #if Inputlist[InputZeilenIndex][1].type == SyntaxChain[ChainIndex][0][1][0]:
-               #     print("Level_01...:", Inputlist[InputZeilenIndex][1].type)
-               #         type = SyntaxChain[ChainIndex][1]  # Ergebnis
-                #else:
-                 #   break
-        print("-->", OutType)
-        print("---------------------")
-
-    return []
-
-    # print(SyntaxChain[ChainIndex][0][InputElementIndex][0])
-    # print(Inputlist[InputElementIndex].type)
-
-    # if SyntaxChain[ChainIndex][0][0][0] == Inputlist[InputElementIndex].type:
-    #   print(SyntaxChain[ChainIndex][0][0][0])
-    #  type = SyntaxChain[ChainIndex][1]
-    # break
-
-    #   if len(Inputlist[InputElementIndex]) == len(chain[ChainZeilenIndex][0]):
-    #      #print(chain[ChainZeilenIndex][0], " ", len(Inputlist[InputElementIndex]), " ", len(chain[ChainZeilenIndex][0]))
-    #      canceled = True
-    #   for InputElementIndex in range(0, len(Inputlist[InputElementIndex])):
-    # print(Inputlist[InputElementIndex][InputZeilenElementIndex].type)
-    # print(SyntaxChain[ChainZeilenIndex][0][0][0])
-    # if Inputlist[InputElementIndex][InputZeilenElementIndex].type != SyntaxChain[ChainZeilenIndex][0][InputZeilenElementIndex][0]:
-    #      canceled = False  #wenn noch nicht gefunden, wird nicht abgebrochen
-    #      break
-    # if canceled:
-    #   type = SyntaxChain[ChainIndex][0][0][0]
-
-    # outputlist = Inputlist
-    # Notiz: liste Tupels, nicht 2D: z.B: variable assignment, Variabelname,
-
-#    print(Inputlist)
-#    for InputElementIndex in range(0, len(Inputlist)):  # Line
-#        print("Zeile: ", InputElementIndex," ",Inputlist[InputElementIndex], "| Inputline")
-#        type = "No type found"
-#        for ChainZeilenIndex in range(0, len(chain)):#
-#            if len(Inputlist[InputElementIndex]) == len(chain[ChainZeilenIndex][0]):
-#                #print(chain[ChainZeilenIndex][0], " ", len(Inputlist[InputElementIndex]), " ", len(chain[ChainZeilenIndex][0]))
-#                canceled = True
-#                for InputZeilenElementIndex in range(0, len(Inputlist[InputElementIndex])):
-#                    if Inputlist[InputElementIndex][InputZeilenElementIndex].type != chain[ChainZeilenIndex][0][InputZeilenElementIndex]:
-#                        canceled = False
-#                        break
-#                if canceled:
-#                    type = chain[ChainZeilenIndex][1]#
-#
-#        print("-->", type)
-#        print("---------------------")
-
+                    if debug: print("Regel", outTok, "funktioniert!")
+                    if debug: print("searching arguments...")
+                    args = []
+                    for ArgIndex in SyntaxChain[outTokindex][2]:
+                        args.append(Inputlist[ZeilenIndex][ArgIndex].data)
+                    if debug: print("Args:", args)
+                    outlist.append((outTok, args))
+            else:
+                if debug: print("Lengths don't match up!")
+            if debug: print("-"*5 + "Next Syntax" + "-"*5)
+        print(outTok)
+    return outlist
 
 # Strg+Alt+L : Reformat
 ##

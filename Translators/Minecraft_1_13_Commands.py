@@ -18,8 +18,6 @@ def prinvariinte(*args):
     return 'tellraw @p ["",{"score":{"name":"Global","objective":' + args[0] + '}}]'
 
 
-# /tellraw @p ["",{"score":{"name":"Global","objective":"obj"}}]
-
 tosetupvariables = []
 functions = {"einfvaridefiinte": einfvaridefiinte, "prinvariinte": prinvariinte}
 outlist = []

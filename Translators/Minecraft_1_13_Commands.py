@@ -8,14 +8,14 @@ def translate(tokens, debug=False):
     functions = {"Def.Variable.Integer": defVarInt, "Def.Variable.Variable": defVarVar,
                  "Output.Print.Variable": outPriVar, "Def.Comment": defCom}
 
-    outlist.append("MAIN:")
+    outlist.append("#" + "-" * 5 + "MAIN" + "-" * 5)
     for t in tokens:
         if not t[0] in functions:
             print("LOL,", t[0], "can't be translated.")
             continue
         outlist.append(functions[t[0]](t[1]))
 
-    outlist.append("SETUP:")
+    outlist.append("#" + "-" * 5 + "SETUP" + "-" * 5)
     for t in tosetupvariables:
         outlist.append("scoreboard objectives add " + t)
 

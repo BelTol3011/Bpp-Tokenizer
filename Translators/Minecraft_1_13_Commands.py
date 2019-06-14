@@ -16,7 +16,7 @@ def translate(tokens, debug=False):
 
     outlist.append("#" + "-" * 5 + "SETUP" + "-" * 5)
     for t in tosetupvariables:
-        outlist.append("scoreboard objectives add " + t)
+        outlist.append("scoreboard objectives add " + t + " dummy")
 
     for line in main:
         outlist.append(line)

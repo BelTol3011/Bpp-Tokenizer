@@ -1,6 +1,4 @@
-import sys
 import time
-import ask
 import Parser
 import Tokenize
 import Translators.Minecraft_1_13_Commands as m123c
@@ -10,14 +8,14 @@ import Translators.Cpp as cpp
 parser = argparse.ArgumentParser(description="Programming Language Translator")
 parser.add_argument("inputfile", type=str, help="The file, that is going to be translated")
 parser.add_argument("outputfile", type=str, help="The output file")
-parser.add_argument("outputlanguage", type=str, help="The language that is translated to", choices=["Minecraft_1_13_Commands"])
+parser.add_argument("outputlanguage", type=str, help="The language that is translated to",
+                    choices=["Minecraft_1_13_Commands"])
 parser.add_argument("--d", "--debug", type=str, help="Turns debug mode On or off", choices=["on", "off"], default="off")
 args = parser.parse_args()
-
 t1 = time.time()
 filename = args.inputfile
 outputfilename = args.outputfile
-debug = bool(args.d.replace("off", "False").replace("on", "True"))
+debug = True if args.d == "on" else False
 outputlanguage = args.outputlanguage
 
 print("Converting", filename, "to", outputfilename + ".")
@@ -38,6 +36,8 @@ print("Using", outputlanguage + "!")
 print("Translating...")
 if outputlanguage == "Minecraft_1_13_Commands":
     outcode = m123c.translate(tokens, debug)
+else:
+    raise Exception("Unknown output language!")
 print("-" * 20 + "Translation finshed!" + "-" * 20)
 a = open(outputfilename, "w")
 a.write("")

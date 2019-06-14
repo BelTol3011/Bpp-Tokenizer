@@ -1,9 +1,6 @@
-debugflag = True
-
-
 # strg+alt+L
 
-def tokenize(Inputlist):
+def tokenize(Inputlist, debug=False):
     SyntaxChain = [
         ([("Comment", "")], "Def.Comment", [0]),
         ([("Name", ""), ("Operant", "="), ("Integer", "")], "Def.Variable.Integer", [0, 2]),
@@ -11,9 +8,9 @@ def tokenize(Inputlist):
         ([("Name", "print"), ("Parentheses", "("), ("Name", ""), ("Parentheses", ")")], "Output.Print.Variable", [2])
     ]
     outlist = []
-    debug = debugflag
+
     for ZeilenIndex in range(0, len(Inputlist)):
-        print("Zeile:", Inputlist[ZeilenIndex])
+        if debug: print("Zeile:", Inputlist[ZeilenIndex])
         outTok = "No Type Found!"
 
         for SyntaxChainIndex in range(0, len(SyntaxChain)):
@@ -47,8 +44,8 @@ def tokenize(Inputlist):
                     outlist.append((outTok, args))
             else:
                 if debug: print("Lengths don't match up!")
-            if debug: print("-"*5 + "Next Syntax" + "-"*5)
-        print(outTok)
+            if debug: print("-" * 5 + "Next Syntax" + "-" * 5)
+        if debug: print(outTok)
     return outlist
 
 # Strg+Alt+L : Reformat
@@ -107,9 +104,3 @@ def tokenize(Inputlist):
 # [Name,Space,Operant'=',Space,Integer,Space,Operant='-',Space,Name] -> Zuweisung.Subtraktion
 # [Name,Space,Operant'=',Space,Integer,Space,Operant='/',Space,Name] -> Zuweisung.Division
 # [Name,Space,Operant'=',Space,Integer,Space,Operant='*',Space,Name] -> Zuweisung.Multiplikation
-
-
-# tbd: ist "Name" ein "Name" oder "Fun_Name"
-
-# if schleifen
-#

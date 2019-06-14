@@ -173,13 +173,13 @@ def concatenate(input_list):
     return output_list
 
 
-def Pars(inlist):
+def Pars(inlist, debug=False):
     # print(inlist)
     _outlist = []
     for line in inlist:
         _outlist.append(concatenate(list(line)))
 
-    print(_outlist)
+    if debug: print(_outlist)
     outlist = []
     for line in _outlist:
         temp = []
@@ -191,7 +191,7 @@ def Pars(inlist):
         outlist.append(temp)
 
     # floating
-    print("concatenating floats..")
+    if debug: print("concatenating floats..")
     for i in range(0, len(outlist)):
         for j in range(1, len(outlist[i]) - 1):
 
@@ -201,7 +201,7 @@ def Pars(inlist):
                 del outlist[i][j + 1]
                 del outlist[i][j - 1]
 
-    print("concatenating operants...")
+    if debug: print("concatenating operants...")
     for i in range(0, len(outlist)):
         for j in range(0, len(outlist[i]) - 1):
             if outlist[i][j].data \
@@ -230,15 +230,13 @@ def Pars(inlist):
                 outlist[i][j] = Operant("%=")
                 del outlist[i][j + 1]
 
-    print("detecting bools...")
+    if debug: print("detecting bools...")
     for i in range(0, len(outlist)):
         for j in range(0, len(outlist[i])):
             if outlist[i][j].data in ["True", "False"]:
                 outlist[i][j] = Boolean(outlist[i][j].data)
 
-
-
-    print("removing spaces...")
+    if debug: print("removing spaces...")
     new_outlist = []
     for i in range(0, len(outlist)):
         temp = []
@@ -249,8 +247,8 @@ def Pars(inlist):
     outlist = new_outlist
 
     for line in outlist:
-        print()
+        if debug: print()
         for element in line:
-            print(element.type, element.data, end=", ")
-    print()
+            if debug: print(element.type, element.data, end=", ")
+    if debug: print()
     return outlist

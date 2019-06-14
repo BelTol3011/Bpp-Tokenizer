@@ -1,9 +1,9 @@
 # Comment
 # bla
+
 integer = 124567
 a = integer
 print(a)
-
 
 # float = 3.141592653589793238462643
 # string = "Hallo Welt!!"
@@ -17,4 +17,3 @@ print(a)
 # def Function(argument1, argument2, argument3=4):
 #     return argument1 + argument2 * argument3
 # a = Function(1, 2)
-

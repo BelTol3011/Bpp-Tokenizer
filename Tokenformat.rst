@@ -11,7 +11,7 @@
 
 The Tokens are a 2 dimensional List.
 
-It looks like This:
+It looks like this:
 ``[``
 
 ``[object, object, object],``
@@ -20,7 +20,7 @@ It looks like This:
 
 ``]``
 
-.. note:: that I also could write it like This:
+.. note:: that I also could write it like this:
           ``[[object, object, object],[object, object]]``
 
 
@@ -41,11 +41,12 @@ The object types are:
 * Parantheses
 * String
 * Float
+* Seperator
 
 -----
  Out
 -----
-Out comes a list of objects. These objects control the translator at the end.
+Out comes a list of objects. These objects control the translator in the end.
 The main job of the Tokenizer is it, to simplify the code:
 
 .. admonition:: For example
@@ -56,48 +57,12 @@ Like I said before, these objects control the translator.
 Here are the Objects:
 
 
-Outdated:
 
-+----------------------------+----------------------------+
-|        Function            |        Use                 |
-+============================+============================+
-|``translator.add(a, b, x)`` |  Adds/divides/multiplies/  |
-|``translator.mul(a, b, x)`` |  subtracts or modules      |
-|``translator.div(a, b, x)`` |  two integers or floats    |
-|``translator.sub(a, b, x)`` |  and stores it in x.       |
-|``translator.mod(a, b, x)`` |                            |
-+----------------------------+----------------------------+
-|``translator.prt(str)``     |  Prints a string.          |
-|``translator.vrt(var)``     |  Prints a variable.        |
-+----------------------------+----------------------------+
-|``translator.vdd(a, b, x)`` |  Adds/divides/multiplies/  |
-|``translator.vul(a, b, x)`` |  subtracts or modules      |
-|``translator.viv(a, b, x)`` |  two variables and stores  |
-|``translator.vub(a, b, x)`` |  it in x.                  |
-|``translator.vod(a, b, x)`` |                            |
-+----------------------------+----------------------------+
-|                            |                            |
-|                            |                            |
-|                            |                            |
-|                            |                            |
-|                            |                            |
-|                            |                            |
-|                            |                            |
-|                            |                            |
-+----------------------------+----------------------------+
-
-
-===========================  ===========================
-Function                     Meaning
-===========================  ===========================
-asd
-
-===========================  ===========================
 
 The Tokenize function returns a list of tupels. These tupels contain at the first index the function.
 
 .. warning:: Do **not** store these functions like this: ``(tranlator.mul(), [a, b, x])``.
-             **Do** store them like this: ``(translator.add, [a, b, x])``
+             **Do** store them like this: ``(translator.add, [a, b, x])``.
              You have to leave out the parantheses.
 
 The second index is the list of arguments to this function.

@@ -1,8 +1,12 @@
 # Bpp-Tokenizer
 A Compiler/Translator for my own Bpp code.
 
-Just use the Main.py like this:
-`Main.py inputfilename.bpp outputfilename.x`.
-`.x` means, that you can translate to different languages like:
-* Minecraft_1.13_Commands (`.mcfunction`)
+`Main.py` is the Main file.
+You can use it by doing:
+`Main.py inputfilename outputfilename translator --debug --h --help`
 
+This whole project is in a BETA state.
+I DO NOT GUARANTEE FUNCTIONALITY!
+
+These Translators are working:
+* `Minecraft_1_13_Commands`

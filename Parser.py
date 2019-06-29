@@ -5,6 +5,13 @@ class Operant:
         self.data = type
 
 
+class Boolean:
+    type = "Boolean"
+
+    def __init__(self, type):
+        self.data = type
+
+
 class Space:
     type = "Space"
 
@@ -47,8 +54,8 @@ class Comment:
         self.data = comment
 
 
-class Parantheses:
-    type = "Parantheses"
+class Parentheses:
+    type = "Parentheses"
 
     def __init__(self, paran):
         self.data = paran
@@ -108,8 +115,8 @@ def is_type(x):
 
 
 classregister = {"operant": Operant, "compare_Operant": Compare_Operant, "name": Name, "space": Space,
-                 "parants": Parantheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot,
-                 "calc_Operant": Calc_Operant, "seperator": Seperator}
+                 "parants": Parentheses, "integer": Integer, "comment": Comment, "string": String, "dot": Dot,
+                 "calc_Operant": Calc_Operant, "seperator": Seperator, "bool": Boolean}
 operants = ["=", "-=", "+=", "*=", "/=", "%=", "++", "--"]
 compare_operants = ["or", "and", "not"]
 calc_operants = ["+", "-", "*", "/", "%"]
@@ -166,13 +173,13 @@ def concatenate(input_list):
     return output_list
 
 
-def Pars(inlist):
+def Pars(inlist, debug=False):
     # print(inlist)
     _outlist = []
     for line in inlist:
         _outlist.append(concatenate(list(line)))
 
-    print(_outlist)
+    if debug: print(_outlist)
     outlist = []
     for line in _outlist:
         temp = []
@@ -184,7 +191,7 @@ def Pars(inlist):
         outlist.append(temp)
 
     # floating
-    print("concatenating floats..")
+    if debug: print("concatenating floats..")
     for i in range(0, len(outlist)):
         for j in range(1, len(outlist[i]) - 1):
 
@@ -194,7 +201,7 @@ def Pars(inlist):
                 del outlist[i][j + 1]
                 del outlist[i][j - 1]
 
-    print("concatenating operants...")
+    if debug: print("concatenating operants...")
     for i in range(0, len(outlist)):
         for j in range(0, len(outlist[i]) - 1):
             if outlist[i][j].data \
@@ -222,17 +229,14 @@ def Pars(inlist):
                     "=":
                 outlist[i][j] = Operant("%=")
                 del outlist[i][j + 1]
-            elif outlist[i][j].data \
-                    == "-" and outlist[i][j + 1].data == \
-                    "-":
-                outlist[i][j] = Operant("--")
-                del outlist[i][j + 1]
-            elif outlist[i][j].data \
-                    == "+" and outlist[i][j + 1].data == \
-                    "+":
-                outlist[i][j] = Operant("++")
-                del outlist[i][j + 1]
-    print("removing spaces...")
+
+    if debug: print("detecting bools...")
+    for i in range(0, len(outlist)):
+        for j in range(0, len(outlist[i])):
+            if outlist[i][j].data in ["True", "False"]:
+                outlist[i][j] = Boolean(outlist[i][j].data)
+
+    if debug: print("removing spaces...")
     new_outlist = []
     for i in range(0, len(outlist)):
         temp = []
@@ -243,8 +247,8 @@ def Pars(inlist):
     outlist = new_outlist
 
     for line in outlist:
-        print()
+        if debug: print()
         for element in line:
-            print(element.type, element.data, end=", ")
-    print()
+            if debug: print(element.type, element.data, end=", ")
+    if debug: print()
     return outlist

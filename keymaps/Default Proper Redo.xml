@@ -5,4 +5,7 @@
     <keyboard-shortcut first-keystroke="ctrl y" />
   </action>
   <action id="EditorDeleteLine" />
+  <action id="SearchEverywhere">
+    <keyboard-shortcut first-keystroke="shift ctrl alt enter" />
+  </action>
 </keymap>

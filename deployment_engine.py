@@ -3,7 +3,6 @@ Code = list[str]
 
 # Path = tuple[str, list[str]]
 
-
 class Path(tuple[str, list[str]]):
     def __hash__(self):
         return hash(get_mcfunction_str(self))
@@ -23,7 +22,7 @@ def split_list_file(input_code: Code) -> dict[str: Code]:
     for i in range(len(section_indices) - 1):
         current = section_indices[i]
         next_ = section_indices[i + 1]
-        section = input_code[current:next_]
+        section = input_code[current + 1:next_]
 
         name = input_code[current].rstrip().split()[-1]
 
@@ -43,6 +42,7 @@ def karma_util(string: str, search_char: str = "$") -> list[int]:
     indeces = []
 
     in_string = False
+    in_comment = False
     karma = 0
     for i, char in enumerate(string):
         if char in "({[":
@@ -51,8 +51,14 @@ def karma_util(string: str, search_char: str = "$") -> list[int]:
             karma -= 1
         elif char == '"':
             in_string = not in_string
+        elif char == "#" and not in_string:
+            in_comment = True
+        elif char == "\n":
+            in_string = False
+            in_comment = False
+            karma = 0
 
-        if karma == 0 and not in_string and char == search_char:
+        if karma == 0 and not in_string and char == search_char and not in_comment:
             indeces.append(i)
 
     return indeces
@@ -73,14 +79,15 @@ def link(code: Code, function_dict: dict[str: tuple[Path, Code]]) -> Code:
     for index in indeces:
         name = ""
         i = 1
-        while (char := code[index + i]) not in [" ", "\n"]:
+        while len(code) > index + i and (char := code[index + i]) not in [" ", "\n"]:
             name += char
             i += 1
 
-        if code[index+1] != "!":
+        if code[index - 1] != "\n":
             replacement = get_mcfunction_str(function_dict[name][0])
         else:
-            replacement = "\n".join(function_dict[name][1])
+            code_ = link(function_dict[name][1], function_dict)
+            replacement = f"##! [{name}] begin\n" + "\n".join(code_) + f"\n##! [{name}] end\n"
         # print(mcfunction_string)
         code = code[:index] + replacement + code[index + len(replacement):]
 

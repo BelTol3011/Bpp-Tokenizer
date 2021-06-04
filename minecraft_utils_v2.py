@@ -3,6 +3,7 @@ import deployment_engine
 
 Code = list[str]
 
+
 class MCObjective:
     def __init__(self, name: str):
         self.name = name

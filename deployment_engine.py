@@ -96,18 +96,23 @@ def link(code: Code, function_dict: dict[str: tuple[Path, Code]]) -> Code:
     return code.split("\n")
 
 
-def preprocess(code: Code, attributes: list[str]):
+def preprocess(code: Code, attributes: set[str]):
     for i, line in enumerate(code):
-        index, *_ = karma_util(line, "?")
-        if index != 0:
+        try:
+            index = line.index("?")
+        except ValueError:
+            continue
+        if index != 1:
             continue
 
-        attribute = line[0:].rstrip()
+        attribute = line[2:].rstrip()
         if attribute not in attributes:
-            code[i + 1] = "#" + code[i + 1]
+            code[i + 1] = "# " + code[i + 1]
+
+    return code
 
 
-def batch_link(function_lists: list[tuple[Path, Code]]) -> dict[Path: Code]:
+def batch_link(function_lists: list[tuple[Path, Code]], attributes: set[str]) -> dict[Path: Code]:
     functions_namescodes: dict[str: tuple[Path, Code]] = {}
     for path, function_list in function_lists:
         _functions = split_list_file(function_list)
@@ -115,7 +120,8 @@ def batch_link(function_lists: list[tuple[Path, Code]]) -> dict[Path: Code]:
         for name in _functions:
             # extend the path to contain the function name
             _path = Path((path[0], path[1] + [name]))
-            functions_namescodes.update({name: (_path, _functions[name])})
+            code = preprocess(_functions[name], attributes)
+            functions_namescodes.update({name: (_path, code)})
 
     linked_functions: dict[Path: Code] = {}
     for name in functions_namescodes:
@@ -135,8 +141,8 @@ def pp_functions(functions: dict[Path: Code]):
         print("\n".join(functions[path]))
 
 
-def to_datapack(function_lists: list[tuple[Path, Code]], output_path: str):
-    files = batch_link(function_lists)
+def to_datapack(function_lists: list[tuple[Path, Code]], output_path: str, attributes: set[str]):
+    files = batch_link(function_lists, attributes)
 
     os.makedirs(f"{output_path}/data/minecraft/tags/functions", exist_ok=True)
 
@@ -162,9 +168,9 @@ def main():
     2. generate the unlinked user code (.list.mcfunction) via the python script
     3. link and copy the user code with the mcutils function locations
     """
-    with open("mcutils/mcutils.list.mcfunction", "r") as f:
+    with open("libs/mcutils.list.mcfunction", "r") as f:
         code = f.read().split("\n")
-    to_datapack([(Path(("mcutils", [])), code)], "Datapack")
+    to_datapack([(Path(("mcutils", [])), code)], "Datapack", {"debug"})
 
 
 if __name__ == "__main__":

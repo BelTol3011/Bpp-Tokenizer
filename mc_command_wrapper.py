@@ -4,6 +4,10 @@ def say(message: str):
     return f"say {message}"
 
 
+def call_function(name: str):
+    return f"function {name}"
+
+
 def add_scoreboard_objective(name: str, criteria: str = "dummy", display_name: str = ""):
     # TODO: check if criteria is valid
     # TODO: check if display name is valid
@@ -11,10 +15,6 @@ def add_scoreboard_objective(name: str, criteria: str = "dummy", display_name: s
     assert len(name) <= 16, "Scoreboard objectives mustn't be longer than 16 chars."
 
     return f"scoreboard objectives add {name} {criteria} {display_name}".rstrip()
-
-
-def set_score(entity: str, objective: str, value: int):
-    return f"scoreboard players set {entity} {objective} {value}"
 
 
 def print_score(player: str, objective: str, target: str = "@a"):
@@ -25,6 +25,14 @@ def print_score(player: str, objective: str, target: str = "@a"):
 
 def kill(entity: str):
     return f"kill {entity}"
+
+
+def score_set_cons(player: str, objective: str, value: int):
+    return f"scoreboard players set {player} {objective} {value}"
+
+
+def score_set(target_player: str, target_objective: str, origin_player: str, origin_objective: str):
+    return f"scoreboard players operation {target_player} {target_objective} = {origin_player} {origin_objective}"
 
 
 def score_add_const(player: str, objective: str, increment: int):

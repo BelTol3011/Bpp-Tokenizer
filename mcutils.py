@@ -18,8 +18,8 @@ def get_functions(premises: set[str]) -> list[MCFunction]:
                        add_scoreboard_objective("mcutils.value"),
 
                        say("1: Resetting scores") if "debug" in premises else None,
-                       set_score("latest_id", "mcutils", 0),
-                       set_score("stack_len", "mcutils", 0),
+                       score_set_cons("latest_id", "mcutils", 0),
+                       score_set_cons("stack_len", "mcutils", 0),
 
                        say("2: Removing all previous objects") if "debug" in premises else None,
                        kill("@e[tag=mcutils.object]"),

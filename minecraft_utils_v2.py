@@ -8,13 +8,14 @@ RETURN_PLAYER = "ret"
 
 
 class MCPrimitiveVar:
-    def __init__(self, function: "MCFunction", player: str, objective: str):
+    def __init__(self, player: str, objective: str, function: "MCFunction" = None):
         # TODO: make sure objective is valid
         self.function = function
         self.player = player
         self.objective = objective
 
     def set(self, value: int):
+        # TODO: Check if self.function == None
         self.function.add_command(mccw.score_set_cons(self.player, self.objective, value), f"{self} = {value}")
 
     def add(self, value: int):
@@ -27,14 +28,8 @@ class MCPrimitiveVar:
         # TODO: Create tellraw generator library
         self.function.add_command(mccw.print_score(self.player, self.objective), f"print({self})")
 
-    def call_function(self, function: "MCFunction", *arguments: "MCPrimitiveVar"):
-        # TODO: maybe implement library requirement system
-        # push arguments to stack
-        for argument in arguments:
-            self.function.add_command(mccw.score_set("arg", "mcutils", argument.player, argument.objective),
-                                      f"set arg {argument} for mcutils push operation")
-            self.function.add_command(mccw.call_function("push"), "invoke mcutils push operation")
-        self.function.add_command(mccw.call_function(function.name), f"call {function.name} function")
+    def set_function(self, function: "MCFunction"):
+        self.function = function
 
 
 class MCClass:
@@ -71,12 +66,24 @@ class MCFunction:
         arguments = list(arguments)
         arguments.reverse()
         for argument in arguments:
-            # pop
-            self.add_command(mccw.call_function("pop"), f"pop {argument}")
+            # add itself as command acceptor
+            argument.set_function(self)
 
-            # TODO: switch context to this function
+            # pop
+            self.add_command(mccw.call_function("$pop"), f"pop {argument}")
+
+            # TO DO: switch context to this function
             # define var
             self.add_command(mccw.score_set(argument.player, argument.objective, "ret", "mcutils"), "finish pop")
+
+    def call_function(self, function: "MCFunction", *arguments: "MCPrimitiveVar"):
+        # TODO: maybe implement library requirement system
+        # push arguments to stack
+        for argument in arguments:
+            self.add_command(mccw.score_set("arg", "mcutils", argument.player, argument.objective),
+                             f"set arg {argument} for mcutils push operation")
+            self.add_command(mccw.call_function("$push"), "invoke mcutils push operation")
+        self.add_command(mccw.call_function(function.name), f"call {function.name} function")
 
     def get_function_list(self) -> Code:
         return [f"### {self.name}"] + self.commands

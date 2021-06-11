@@ -19,6 +19,7 @@ main.call_function(test_function, e)
 print(c.get_code())
 with open("libs/mcutils.list.mcfunction", "r") as f:
     libmcutils_code = f.read().split("\n")
+print(c.get_code())
 de.to_datapack([(de.Path(("main", [])), c.get_code()),
                 (de.Path(("mcutils", [])), libmcutils_code)],
                "Datapack",

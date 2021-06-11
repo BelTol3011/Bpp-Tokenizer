@@ -70,20 +70,30 @@ class MCFunction:
             argument.set_function(self)
 
             # pop
-            self.add_command(mccw.call_function("$pop"), f"pop {argument}")
+            self.comment(f"pop {argument}")
+            self.call_function("pop")
 
-            # TO DO: switch context to this function
             # define var
             self.add_command(mccw.score_set(argument.player, argument.objective, "ret", "mcutils"), "finish pop")
 
-    def call_function(self, function: "MCFunction", *arguments: "MCPrimitiveVar"):
+    def comment(self, comment: str):
+        self.commands.append(f"# {comment}")
+
+    def call_function(self, function: Union["MCFunction", str], *arguments: "MCPrimitiveVar"):
         # TODO: maybe implement library requirement system
+        # TODO: Another warning here
         # push arguments to stack
         for argument in arguments:
             self.add_command(mccw.score_set("arg", "mcutils", argument.player, argument.objective),
                              f"set arg {argument} for mcutils push operation")
             self.add_command(mccw.call_function("$push"), "invoke mcutils push operation")
-        self.add_command(mccw.call_function(function.name), f"call {function.name} function")
+        if isinstance(function, MCFunction):
+            name = function.name
+        else:
+            name = function
+            print(f"Try using an MCFunction object instead of a str: {function}")
+
+        self.add_command(mccw.call_function(f"${name}"), f"call {name} function")
 
     def get_function_list(self) -> Code:
         return [f"### {self.name}"] + self.commands
@@ -109,12 +119,12 @@ class MCFunction:
         else:
             player = scope.get_player()
 
-        return MCPrimitiveVar(self, player, name)
+        return MCPrimitiveVar(player, name, self)
 
     def create_object(self, mcclass: MCClass):
         # calls create_object backend function
         # self.call_mc
-        ...
+        raise NotImplementedError
 
     def add_command(self, command: str, comment: str = ""):
         """Appends the minecraft command specified to the command list"""

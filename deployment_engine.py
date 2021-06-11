@@ -73,27 +73,17 @@ def link(code: Code, function_dict: dict[str: tuple[Path, Code]]) -> Code:
         $create_obj@mcutils -> namespace:mcutils/create_obj
     """
 
-    # convert Code to str
-    code = "\n".join(code)
-    # TODO: loop over every line of code, not convert it to str and back
-    indeces = karma_util(code, "$")  # indeces of the $ symbols in the file string
-    # print(f"{indeces=}")
-    for index in indeces:
-        name = ""
-        i = 1
-        while len(code) > index + i and (char := code[index + i]) not in [" ", "\n"]:
-            name += char
-            i += 1
+    for i, line in enumerate(code):
+        if line.startswith("function $"):
+            replacement = get_mcfunction_str(function_dict[line[10:]][0])
+            code[i] = f"function {replacement}"
+        elif line.startswith("$"):
+            name = line[1:]
+            # no need to link the functions since it is iterating over them nonetheless
+            line_ = function_dict[name][1]
+            code[i:i] = [f"##! [{name}] begin", *line_, f"##! [{name}] end"]
 
-        if code[index - 1] != "\n":
-            replacement = get_mcfunction_str(function_dict[name][0])
-        else:
-            code_ = link(function_dict[name][1], function_dict)
-            replacement = f"##! [{name}] begin\n" + "\n".join(code_) + f"\n##! [{name}] end\n"
-        # print(mcfunction_string)
-        code = code[:index] + replacement + code[index + i:]
-
-    return code.split("\n")
+    return code
 
 
 def preprocess(code: Code, attributes: set[str]):

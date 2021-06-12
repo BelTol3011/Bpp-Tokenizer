@@ -44,8 +44,7 @@ from mctpyes import *
 
 
 class Namespace:
-    def __init__(self, namespace: str):
-        self.namespace = namespace
+    def __init__(self):
         self.functions: list[MCFunction] = []
 
     def add_function(self, function: "MCFunction"):

@@ -8,14 +8,16 @@ RETURN_PLAYER = "ret"
 
 
 class MCPrimitiveVar:
-    def __init__(self, player: str, objective: str, function: "MCFunction" = None):
+    def __init__(self, player: str, objective: str, function: "MCFunction", initial_value: int = None):
         # TODO: make sure objective is valid
-        self.function = function
         self.player = player
         self.objective = objective
+        self.set_function(function)
+        if initial_value is not None:
+            self.set(initial_value)
 
     def set(self, value: int):
-        # TODO: Check if self.function == None
+        # TODO: assert self.function != None
         self.function.add_command(mccw.score_set_cons(self.player, self.objective, value), f"{self} = {value}")
 
     def add(self, value: int):
@@ -30,6 +32,7 @@ class MCPrimitiveVar:
 
     def set_function(self, function: "MCFunction"):
         self.function = function
+        self.function.add_objective(self.objective)
 
 
 class MCClass:
@@ -40,49 +43,60 @@ class MCClass:
 from mctpyes import *
 
 
-def pp_code(files: dict[str: Code]) -> str:
-    return "\n".join([f"[{file}.mcfunction]\n" + "\n".join(files[file]) for file in files])
-
-
 class Namespace:
     def __init__(self, namespace: str):
         self.namespace = namespace
         self.functions: list[MCFunction] = []
 
-    def create_function(self, *args, **kwargs):
-        function = MCFunction(*args, **kwargs)
+    def add_function(self, function: "MCFunction"):
         self.functions.append(function)
-        return function
 
     def get_code(self) -> Code:
         return sum([function.get_function_list() for function in self.functions], [])
 
+    def get_objectives(self):
+        return sum([function.objectives for function in self.functions], [])
+
+    def get_install(self, name: str = "__install__") -> Code:
+        return [f"### {name}"] + [mccw.add_scoreboard_objective(objective) for objective in self.get_objectives()]
+
 
 class MCFunction:
-    def __init__(self, name: str, *arguments: MCPrimitiveVar):
+    def __init__(self, name: str, arguments: tuple["str"] = ()):
         self.commands: Code = []
         self.name = name
-        # reverse arguments because first arguments are pushed first so the last argument is the first to be popped
-        arguments = list(arguments)
-        arguments.reverse()
+        self.arguments = ()
+        self.objectives = []
         for argument in arguments:
-            # add itself as command acceptor
-            argument.set_function(self)
+            var = self.get_var(argument, scope=self)
 
             # pop
-            self.comment(f"pop {argument}")
+            self.comment(f"pop {var}")
             self.call_function("pop")
 
             # define var
-            self.add_command(mccw.score_set(argument.player, argument.objective, "ret", "mcutils"), "finish pop")
+            self.add_command(mccw.score_set(var.player, var.objective, "ret", "mcutils"), "finish pop")
+
+            # add var to arg list
+            self.arguments += (var,)
+
+    def get_arg_vars(self):
+        return self.arguments
 
     def comment(self, comment: str):
         self.commands.append(f"# {comment}")
 
-    def call_function(self, function: Union["MCFunction", str], *arguments: "MCPrimitiveVar"):
+    def add_objective(self, objective: str):
+        assert len(objective) <= 16
+        self.objectives.append(objective)
+
+    def call_function(self, function: Union["MCFunction", str], arguments: tuple[MCPrimitiveVar] = ()):
         # TODO: maybe implement library requirement system
-        # TODO: Another warning here
         # push arguments to stack
+        # reverse arguments because first arguments are pushed first so the last argument is the first to be popped
+        arguments = list(arguments)
+        arguments.reverse()
+
         for argument in arguments:
             self.add_command(mccw.score_set("arg", "mcutils", argument.player, argument.objective),
                              f"set arg {argument} for mcutils push operation")
@@ -91,6 +105,7 @@ class MCFunction:
             name = function.name
         else:
             name = function
+            # TODO: Another warning here
             print(f"Try using an MCFunction object instead of a str: {function}")
 
         self.add_command(mccw.call_function(f"${name}"), f"call {name} function")
@@ -109,7 +124,7 @@ class MCFunction:
         # set return score
         self.add_command(mccw.score_set(RETURN_PLAYER, META_OBJECTIVE, var.player, var.objective), f"return {var}")
 
-    def get_var(self, name: str, scope: Union[Namespace, "MCFunction", str] = None):
+    def get_var(self, name: str, scope: Union[Namespace, "MCFunction", str] = None, initial_value: int = None):
         scope = self if scope is None else scope
 
         if scope == "self":
@@ -119,7 +134,7 @@ class MCFunction:
         else:
             player = scope.get_player()
 
-        return MCPrimitiveVar(player, name, self)
+        return MCPrimitiveVar(player, name, self, initial_value)
 
     def create_object(self, mcclass: MCClass):
         # calls create_object backend function

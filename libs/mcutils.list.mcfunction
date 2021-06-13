@@ -35,10 +35,10 @@ summon armor_stand 0 64 0 {Tags: ["mcutils.object", "mcutils.temp"]}
 scoreboard players operation @e[tag=mcutils.temp, limit=1] mcutils.obj_id = latest_id mcutils
 
 # return obj_id
-scoreboard players operation arg mcutils = latest_id mcutils
+scoreboard players operation ret mcutils = latest_id mcutils
 
-function $push
-#$push
+# increment latest_id
+scoreboard players add latest_id mcutils 1
 
 ### fetch_object
 tag @e remove mcutils.ret

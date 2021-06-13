@@ -204,8 +204,8 @@ class MCFunction:
             self.commands.append(f"# {command}")
         self.commands.append(command)
         self.commands.append("")
-        self.commands.append('execute if entity @e[tag=mcutils.stack] run say Stack!:')
-        self.commands.append('execute if entity @e[tag=mcutils.stack] as @e[tag=mcutils.stack] run tellraw @a [{"score": {"name": "@e[tag=mcutils.stack]", "objective": "mcutils.value"}}]')
+        # self.commands.append('execute if entity @e[tag=mcutils.stack] run say Stack!:')
+        # self.commands.append('execute if entity @e[tag=mcutils.stack] as @e[tag=mcutils.stack] run tellraw @a [{"score": {"name": "@e[tag=mcutils.stack]", "objective": "mcutils.value"}}]')
 
     def add_commands(self, commands: list[str]):
         """Appends a list of commands and premises to the command list"""

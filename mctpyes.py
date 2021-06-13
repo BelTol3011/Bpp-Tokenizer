@@ -1,4 +1,4 @@
-from minecraft_utils_v2 import *
+from minecraft_utils_v2 import MCClass, MCFunction
 
 
-MCInt = MCClass()
+# MCInt = MCClass()

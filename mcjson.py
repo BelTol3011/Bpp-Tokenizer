@@ -7,12 +7,7 @@ VALID_COLORS = ["black", "dark_blue", "dark_green", "dark_aqua", "dark_red", "da
 NOT_SPECIFIED = type("NotSpecified", (), {})
 
 
-class UUID:
-    ...
-    # TODO: Implement this
-    # https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html
-    # https://github.com/AjaxGb/mc-uuid-converter
-
+# TODO: be able to use str type instead of only TextComponent
 
 class ClickEvent:
     def __init__(self,
@@ -239,8 +234,12 @@ class NBT(TextComponent):
                ({"storage": self.storage} if self.storage != NOT_SPECIFIED else {})
 
 
-def get_raw_dict(*text_components) -> list:
+def get_raw_dict(*text_components: TextComponent) -> list:
     return [text_component.get_dict() for text_component in text_components]
+
+
+def get_raw_json(*text_components: TextComponent) -> str:
+    return json.dumps(get_raw_dict(*text_components))
 
 
 def main():
@@ -248,31 +247,26 @@ def main():
                         PlainText("Underlined ", underlined=True), PlainText("Strikethrough ", strikethrough=True),
                         PlainText("Obfuscated ", obfuscated=True),
                         *[PlainText(color, color=color) for color in VALID_COLORS]]
-    print(json.dumps(get_raw_dict(*base_format_test,
-                                  PlainText("Insertion ", insertion="insertion goes here"),
-                                  PlainText("ClickEventOpenURL ",
-                                            click_event=ClickEvent("open_url", "https://example.org/")),
-                                  PlainText("ClickEventRunCommand ",
-                                            click_event=ClickEvent("run_command", "/say WORKS!")),
-                                  PlainText("ClickEventSuggestCommand ",
-                                            click_event=ClickEvent("suggest_command", "/say WOOP WOOP!")),
-                                  PlainText("ClickEventCopyClipboard ",
-                                            click_event=ClickEvent("copy_to_clipboard", "clipboard goes here")),
-                                  PlainText("HoverEventShowText ", hover_event=ShowText(base_format_test)),
-                                  PlainText("HoverEventShowItem ",
-                                            hover_event=ShowItem({"id": "minecraft:command_block"})),
-                                  TranslatedText("translation.test.none"),
-                                  TranslatedText("translation.test.complex",
-                                                 [PlainText("1"), PlainText("2"), PlainText("3")]),
-                                  ScoreboardValue("*", "test"),
-                                  Selector("@e", separator=[PlainText("SEP", color="red")]),
-                                  Keybind("key.jump"),
-                                  NBT("Pos", entity="@e", separator=[PlainText("SEP", color="red")]))))
-
+    print(get_raw_json(*base_format_test,
+                       PlainText("Insertion ", insertion="insertion goes here"),
+                       PlainText("ClickEventOpenURL ",
+                                 click_event=ClickEvent("open_url", "https://example.org/")),
+                       PlainText("ClickEventRunCommand ",
+                                 click_event=ClickEvent("run_command", "/say WORKS!")),
+                       PlainText("ClickEventSuggestCommand ",
+                                 click_event=ClickEvent("suggest_command", "/say WOOP WOOP!")),
+                       PlainText("ClickEventCopyClipboard ",
+                                 click_event=ClickEvent("copy_to_clipboard", "clipboard goes here")),
+                       PlainText("HoverEventShowText ", hover_event=ShowText(base_format_test)),
+                       PlainText("HoverEventShowItem ",
+                                 hover_event=ShowItem({"id": "minecraft:command_block"})),
+                       TranslatedText("translation.test.none"),
+                       TranslatedText("translation.test.complex",
+                                      [PlainText("1"), PlainText("2"), PlainText("3")]),
+                       ScoreboardValue("*", "test"),
+                       Selector("@e", separator=[PlainText("SEP", color="red")]),
+                       Keybind("key.jump"),
+                       NBT("Pos", entity="@e", separator=[PlainText("SEP", color="red")])))
 
 if __name__ == '__main__':
     main()
-
-    # 00000000-0000-0000-0000-000000000000
-    # 73901829-1573-6044-2511-62721581425423872
-    # 0467a705-5dcb-4c49-bab2-46d3195b7400

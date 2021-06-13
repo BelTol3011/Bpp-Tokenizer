@@ -27,7 +27,11 @@ def kill(entity: str):
     return f"kill {entity}"
 
 
-def score_set_cons(player: str, objective: str, value: int):
+def tellraw(player: str, raw_json: str):
+    return f"tellraw {player} {raw_json}"
+
+
+def score_set_const(player: str, objective: str, value: int):
     return f"scoreboard players set {player} {objective} {value}"
 
 

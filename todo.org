@@ -1,0 +1,14 @@
+* TODO Tasks [0/7]
+  - [ ] Classes and Obejects
+  - [ ] Data types [0/2]
+    - [ ] String
+    - [ ] List
+  - [ ] return value
+  - [ ] Control structure [0/2]
+    - [ ] if/elif/else
+    - [ ] while/for
+  - [ ] Standardized libraries
+  - [ ] Warning and error system
+  - [ ] Datapack export
+    
+    

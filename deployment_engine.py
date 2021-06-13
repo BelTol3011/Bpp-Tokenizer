@@ -133,7 +133,7 @@ def pp_functions(functions: dict[Path: Code]):
 
 def to_datapack(function_lists: list[tuple[Path, Code]], output_path: str, attributes: set[str]):
     files = batch_link(function_lists, attributes)
-
+    pp_functions(files)
     os.makedirs(f"{output_path}/data/minecraft/tags/functions", exist_ok=True)
 
     with open(f"{output_path}/pack.mcmeta", "w") as f:

@@ -14,7 +14,7 @@ RETURN_PLAYER = "ret"
 
 
 class MCPrimitiveVar:
-    def __init__(self, player: str, objective: str, function: "MCFunction", initial_value: int = None):
+    def __init__(self, player: str, objective: str, function: Union["MCFunction", None], initial_value: int = None):
         # TODO: make sure objective is valid
         self.player = player
         self.objective = objective
@@ -77,7 +77,7 @@ class MCClass:
         return self.init
 
 
-class Namespace:
+class MCNamespace:
     def __init__(self):
         self.functions: list[MCFunction] = []
 
@@ -167,7 +167,7 @@ class MCFunction:
         # set return score
         self.add_command(mccw.score_set(RETURN_PLAYER, META_OBJECTIVE, var.player, var.objective), f"return {var}")
 
-    def get_var(self, name: str, scope: Union[Namespace, "MCFunction", str] = None, initial_value: int = None):
+    def get_var(self, name: str, scope: Union[MCNamespace, "MCFunction", str] = None, initial_value: int = None):
         scope = self if scope is None else scope
 
         if scope == "self":

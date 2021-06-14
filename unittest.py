@@ -1,7 +1,7 @@
 from mcutils import *
 from mcutils import deployment_engine as de
 
-n = Namespace()
+n = MCNamespace()
 
 object_test = MCFunction("object_test")
 

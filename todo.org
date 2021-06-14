@@ -10,5 +10,6 @@
   - [ ] Standardized libraries
   - [ ] Warning and error system
   - [ ] Datapack export
-    
+  - [ ] Improve generated code comments
+  - [ ]
     

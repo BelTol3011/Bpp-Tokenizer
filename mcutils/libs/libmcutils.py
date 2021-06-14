@@ -1,4 +1,4 @@
-from minecraft_utils_v2 import MCPrimitiveVar
+from ..classes import *
 
 # both's functions are None on purpose since they shouldn't be changed
 argument_var = MCPrimitiveVar("arg", "mcutils", None)

@@ -160,7 +160,7 @@ def main():
     """
     with open("libs/mcutils.list.mcfunction", "r") as f:
         code = f.read().split("\n")
-    to_datapack([(Path(("mcutils", [])), code)], "Datapack", {"debug"})
+    to_datapack([(Path(("mcutils", [])), code)], "../Datapack", {"debug"})
 
 
 if __name__ == "__main__":

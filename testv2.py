@@ -1,5 +1,5 @@
-from minecraft_utils_v2 import *
-import deployment_engine as de
+from mcutils import *
+from mcutils import deployment_engine as de
 
 c = Namespace()
 # TODO: create Namespace.get_var_name()
@@ -22,7 +22,7 @@ c.add_function(main)
 c.add_function(test_function)
 
 
-with open("libs/mcutils.list.mcfunction", "r") as f:
+with open("mcutils/libs/mcutils.list.mcfunction", "r") as f:
     libmcutils_code = f.read().split("\n")
 de.to_datapack([(de.Path(("main", [])), c.get_code()+c.get_install()),
                 (de.Path(("mcutils", [])), libmcutils_code)],

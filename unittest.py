@@ -1,5 +1,5 @@
-from minecraft_utils_v2 import *
-import deployment_engine as de
+from mcutils import *
+from mcutils import deployment_engine as de
 
 n = Namespace()
 
@@ -33,7 +33,7 @@ n.add_function(object_test)
 n.add_function(dog_init)
 n.add_function(dog_bark)
 print(n.get_code())
-with open("libs/mcutils.list.mcfunction", "r") as f:
+with open("mcutils/libs/mcutils.list.mcfunction", "r") as f:
     libmcutils_code = f.read().split("\n")
 print(n.get_code())
 de.to_datapack([(de.Path(("unittest", [])), n.get_code() + n.get_install()),

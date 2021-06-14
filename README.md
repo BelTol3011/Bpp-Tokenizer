@@ -1,1 +1,5 @@
-This repository contains concepts and ideas for program transpilers.
+# mcutils
+
+A python wrapper for enabling high-level object-oriented programming with minecraft datapacks.
+
+Documentation following soon.

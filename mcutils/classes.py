@@ -1,19 +1,16 @@
-import sys
-from typing import Union, Iterable
-import warnings
-import mcjson
-import traceback
+from . import *
+from . import mcjson
+from . import mc_command_wrapper as mccw
 
-import mc_command_wrapper as mccw
+from typing import Union
+import sys
+from typing import Iterable
+import warnings
+import traceback
 
 Code = list[str]
 META_OBJECTIVE = "__mcutils__"
 RETURN_PLAYER = "ret"
-
-
-def issue_warning(warning: Warning):
-    warnings.warn(warning)
-    sys.stderr.write("".join(traceback.format_stack()[:-1]) + "\n")
 
 
 class MCPrimitiveVar:
@@ -227,9 +224,13 @@ class MCFunction:
             f"{target_var} = {origin_var}")
 
 
-from mctpyes import *
-import libmcutils
+def issue_warning(warning: Warning):
+    warnings.warn(warning)
+    sys.stderr.write("".join(traceback.format_stack()[:-1]) + "\n")
 
 
 def pp_args(args: Iterable[MCPrimitiveVar], sep: str = ", "):
     return sep.join([str(arg) for arg in args])
+
+
+from .libs import libmcutils

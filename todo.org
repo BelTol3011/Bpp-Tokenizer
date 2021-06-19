@@ -1,5 +1,7 @@
-* TODO Tasks [0/7]
-  - [ ] Classes and Obejects
+* TODO Tasks [1/8]
+  - [ ] Classes and Objects [0/1]
+    - [ ] Context changes with execute as
+      - [ ] python execute wrapper
   - [ ] Data types [0/2]
     - [ ] String
     - [ ] List
@@ -7,9 +9,11 @@
   - [ ] Control structure [0/2]
     - [ ] if/elif/else
     - [ ] while/for
-  - [ ] Standardized libraries
-  - [ ] Warning and error system
-  - [ ] Datapack export
-  - [ ] Improve generated code comments
-  - [ ]
+  - [X] Standardized libraries
+  - [-] Warning and error system [1/2]
+    - [X] Warnings
+    - [ ] Errors
+  - [ ] Target wrappers for @s, @e, ...
+  - [ ] Improved datapack export with datapack class
+  - [ ] Improve generated code comments with hierarchy e.g. "1. Create foo object", "1.1. Push arguments of init to stack", ... 
     

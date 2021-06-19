@@ -51,8 +51,8 @@ class MCPrimitiveVar:
         # change context to this object via fetch_object
         self.function.comment(f"{self}.{function}({pp_args(args)})")
         self.function.comment("Set args for fetch_object")
-        self.function.score_copy(libmcutils.argument_var, self)
-        self.function.call_function(libmcutils.fetch_object)
+
+        libmcutils.call_function(self.function, "fetch_object", self)
 
         # call the function
         self.function.call_function(function, args)

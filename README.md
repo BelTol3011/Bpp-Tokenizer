@@ -1,6 +1,6 @@
 # mcutils
 
-A python wrapper that enables high-level object-oriented programming with minecraft datapacks. It also incluedes a full python tellraw wrapper (`mcjson.py`) and an execute wrapper (`mcexecute.py`).
+A python wrapper that enables high-level object-oriented programming with minecraft datapacks. It also incluedes a full python /tellraw wrapper (`mcjson.py`) and an /execute wrapper (`mcexecute.py`).
 
 Documentation following soon.
 

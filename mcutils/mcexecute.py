@@ -33,6 +33,9 @@ class Execute:
     def __str__(self):
         return self.string
 
+    def __enter__(self):
+        return self
+
     @execute_command
     def align(self, align_x: bool = False, align_y: bool = False, align_z: bool = False):
         assert align_x or align_y or align_z, "At least on must be True"
@@ -153,6 +156,5 @@ class Execute:
                       scale: float = 1.0):
         return f"storage {target} {path} {type_} {scale}"
 
-    @execute_command
     def run(self, command: str):
-        return f"run {command}"
+        return f"{self.string} run {command}"

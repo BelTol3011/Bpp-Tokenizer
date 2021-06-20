@@ -72,16 +72,25 @@ def link(code: Code, function_dict: dict[str: tuple[Path, Code]]) -> Code:
         $foo -> namespace:path/.../foo
         $create_obj@mcutils -> namespace:mcutils/create_obj
     """
+    for i, _ in enumerate(code):
 
-    for i, line in enumerate(code):
-        if line.startswith("function $"):
-            replacement = get_mcfunction_str(function_dict[line[10:]][0])
-            code[i] = f"function {replacement}"
-        elif line.startswith("$"):
-            name = line[1:]
-            # no need to link the functions since it is iterating over them nonetheless
-            line_ = function_dict[name][1]
-            code[i:i] = [f"##! [{name}] begin", *line_, f"##! [{name}] end"]
+        line = code[i]
+
+        if line.startswith("#"):
+            continue
+
+        try:
+            index = line.index("function $")
+            replacement = get_mcfunction_str(function_dict[line[index+10:]][0])
+            code[i] = line[:index + 9] + replacement
+        except ValueError:
+            if line.startswith("$"):
+                name = line[1:]
+                # no need to link the functions since it is iterating over them nonetheless
+                line_ = function_dict[name][1]
+                code[i:i] = [f"##! [{name}] begin", *line_, f"##! [{name}] end"]
+
+
 
     return code
 

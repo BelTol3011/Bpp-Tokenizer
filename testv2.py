@@ -2,7 +2,6 @@ from mcutils import *
 from mcutils import deployment_engine as de
 
 c = MCNamespace()
-# TODO: create Namespace.get_var_name()
 
 test_function = MCFunction("test", ("testarg", ))
 arg, = test_function.get_arg_vars()

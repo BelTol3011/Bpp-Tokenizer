@@ -1,11 +1,11 @@
-* TODO Tasks [1/8]
-  - [ ] Classes and Objects [0/1]
+* TODO Tasks [2/10]
+  - [-] Classes and Objects [1/2]
+    - [X] python execute wrapper
     - [ ] Context changes with execute as
-      - [ ] python execute wrapper
   - [ ] Data types [0/2]
     - [ ] String
     - [ ] List
-  - [ ] return value
+  - [X] return value
   - [ ] Control structure [0/2]
     - [ ] if/elif/else
     - [ ] while/for
@@ -14,6 +14,7 @@
     - [X] Warnings
     - [ ] Errors
   - [ ] Target wrappers for @s, @e, ...
+  - [ ] dynamic scopes + variables (runtime)
   - [ ] Improved datapack export with datapack class
   - [ ] Improve generated code comments with hierarchy e.g. "1. Create foo object", "1.1. Push arguments of init to stack", ... 
     

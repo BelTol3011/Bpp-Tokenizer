@@ -46,16 +46,13 @@ class MCPrimitiveVar:
             self.function.add_objective(self.objective)
 
     def call_function(self, function: "MCFunction", args: tuple["MCPrimitiveVar"]):
-        # TODO: if context is already set, no need to set it again
-        # TODO: change context back after calling the function
         # change context to this object via fetch_object
         self.function.comment(f"{self}.{function}({pp_args(args)})")
-        self.function.comment("Set args for fetch_object")
 
         libmcutils.call_function(self.function, "fetch_object", self)
 
-        # call the function
-        self.function.call_function(function, args)
+        # call the function as the fetched object
+        self.function.call_function(function, args, player=libmcutils.return_selector)
 
 
 class MCClass:
@@ -66,12 +63,16 @@ class MCClass:
         self.name = name
 
     def create_function(self, name: str, args: tuple[str] = (), is_init: bool = False) -> "MCFunction":
-        function = MCFunction(f"{name}_{self.name}", args, libmcutils.return_selector)
+        # TODO: add namespace argument
+        function = MCFunction(f"{self.name}_{name}", args, player="@s")
 
         self.functions.append(function)
         if is_init:
             self.init = function
         return function
+
+    # TODO: consider calling a __create__ function instead of baking it hard code into the function on step above on
+    #  object creation. Maybe add support for hard linking ("$oo" instead of "function $foo")?
 
     def get_init(self):
         return self.init
@@ -79,10 +80,11 @@ class MCClass:
 
 class MCNamespace:
     def __init__(self):
-        self.functions: list[MCFunction] = []
+        self.functions: set[MCFunction] = set()
+        self.function_names: dict[str: int] = {}
 
     def add_function(self, function: "MCFunction"):
-        self.functions.append(function)
+        self.functions.add(function)
 
     def get_code(self) -> Code:
         return sum([function.get_function_list() for function in self.functions], [])
@@ -93,6 +95,15 @@ class MCNamespace:
     def get_install(self, name: str = "__install__") -> Code:
         return [f"### {name}"] + [mccw.add_scoreboard_objective(objective) for objective in self.get_objectives()]
 
+    def get_function_name(self, name):
+        """returns a unique function name beginning with `name`."""
+        if name not in self.function_names:
+            self.function_names.update({name: 0})
+        else:
+            self.function_names[name] += 1
+
+        return name + str(self.function_names[name])
+
 
 class CompilationWarning(Warning):
     def __init__(self, message: str, command: str):
@@ -100,12 +111,18 @@ class CompilationWarning(Warning):
 
 
 class MCFunction:
-    def __init__(self, name: str, arguments: tuple[str] = (), player: str = None):
+    def __init__(self, name: str, arguments: tuple[str, ...] = (), namespace: MCNamespace = None, player: str = None):
         self.commands: Code = []
+        self.sub_functions: list[MCFunction] = []
         self.name = name
-        self.arguments: tuple[MCPrimitiveVar] = ()
+        self.arguments: tuple[MCPrimitiveVar, ...] = ()
         self.objectives = []
         self.player = player
+        self.namespace: MCNamespace = namespace
+
+        if namespace:
+            self.namespace.add_function(self)
+
         for argument in arguments:
             var = self.get_var(argument, scope=self)
 
@@ -123,6 +140,10 @@ class MCFunction:
     def __str__(self):
         return self.name
 
+    def set_namespace(self, namespace: MCNamespace):
+        self.namespace = namespace
+        self.namespace.add_function(self)
+
     def get_arg_vars(self):
         return self.arguments
 
@@ -133,15 +154,15 @@ class MCFunction:
         assert len(objective) <= 16
         self.objectives.append(objective)
 
-    def call_function(self, function: Union["MCFunction", str], arguments: tuple[MCPrimitiveVar] = ()):
+    def call_function(self, function: Union["MCFunction", str], arguments: tuple[MCPrimitiveVar] = (), player: str = None):
         self.comment(f"{function}({pp_args(arguments)})")
-        # TODO: maybe implement library requirement system
         # push arguments to stack
         # reverse arguments because first argument is pushed first so the last argument is the first to be popped
         arguments = list(arguments)
         arguments.reverse()
 
         for argument in arguments:
+            # TODO: Change to libmcutils library
             self.add_command(mccw.score_set("arg", "mcutils", argument.player, argument.objective),
                              f"set arg {argument} for mcutils push operation")
             self.add_command(mccw.call_function("$push"), "invoke mcutils push operation")
@@ -151,10 +172,13 @@ class MCFunction:
             name = function
             issue_warning(CompilationWarning("Try using an MCFunction object instead of a str", function))
 
-        self.add_command(mccw.call_function(f"${name}"), f"call {name} function")
+        command = mccw.call_function(f"${name}")#, f"call {name} function"
+        if player:
+            command = Execute().as_(player).at("@s").run(command)
+        self.add_command(command)
 
     def get_function_list(self) -> Code:
-        return [f"### {self.name}"] + self.commands
+        return [f"### {self.name}"] + self.commands + sum([[f"### {function.name}", f"# sub function of {self.name}"] + function.get_code() for function in self.sub_functions], [])
 
     def get_player(self):
         # mcfunctions are static so this is constant
@@ -165,13 +189,14 @@ class MCFunction:
 
     def return_(self, var: Union[MCPrimitiveVar]):
         # set return score
+        # TODO: make this consistent
         self.add_command(mccw.score_set(RETURN_PLAYER, META_OBJECTIVE, var.player, var.objective), f"return {var}")
 
     def get_var(self, name: str, scope: Union[MCNamespace, "MCFunction", str] = None, initial_value: int = None):
         scope = self if scope is None else scope
 
         if scope == "self":
-            player = "@e[tag=mcutils.ret, limit=1]"
+            player = "@s"
         elif isinstance(scope, str):
             player = scope
         else:
@@ -212,6 +237,19 @@ class MCFunction:
                 continue
             self.add_command(command)
 
+    def execute(self, execute: "Execute") -> "MCFunction":
+        assert self.namespace is not None, \
+            "Can't create an execute function without namespace because of function name collision risk!"
+
+        new_function = MCFunction(f"{self.name}_{self.namespace.get_function_name('execute')}",
+                                  namespace=self.namespace)
+        self.sub_functions.append(new_function)
+
+        # call the execute
+        self.add_command(execute.run(mccw.call_function(f"${new_function.name}")), "Call execute function")
+
+        return new_function
+
     def say(self, message: str, comment: str = ""):
         self.add_command((command := mccw.say(message)), comment or command)
 
@@ -234,3 +272,4 @@ def pp_args(args: Iterable[MCPrimitiveVar], sep: str = ", "):
 
 
 from .libs import libmcutils
+from .mcexecute import Execute

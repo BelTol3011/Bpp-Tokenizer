@@ -2,19 +2,19 @@
 say Loading libmcutils v2 module...
 
 #?debug
-say 0:: Adding scores
+say 0: Adding scores
 scoreboard objectives add mcutils dummy
 scoreboard objectives add mcutils.index dummy
 scoreboard objectives add mcutils.obj_id dummy
 scoreboard objectives add mcutils.value dummy
 
 #?debug
-say 1:: Resetting scores
+say 1: Resetting scores
 scoreboard players set latest_id mcutils 0
 scoreboard players set stack_len mcutils 0
 
 #?debug
-say 2:: Removing all previous objects
+say 2: Removing all previous objects
 kill @e[tag=mcutils.object]
 kill @e[tag=mcutils.stack]
 

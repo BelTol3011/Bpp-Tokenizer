@@ -8,3 +8,5 @@ Documentation following soon.
 * runtime objects
 * linking
 * no Namespaces (it's on my todo-list!)
+
+#### for everything that is planned, just see `todo.org` and all the `# TODO: ` entries scattered around in the files.

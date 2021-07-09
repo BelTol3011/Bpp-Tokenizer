@@ -28,11 +28,11 @@ dog_bark.say("number is:")
 number.print()
 dog_bark.say("end bark")
 
-mydog1 = object_test.create_object(myclass, "mydog", (object_test.get_var("test", initial_value=1), ))
-mydog3 = object_test.create_object(myclass, "mydog3", (object_test.get_var("test", initial_value=3), ))
+mydog1 = object_test.create_object(myclass, "mydog", (object_test.get_var("test", initial_value=1),))
+mydog3 = object_test.create_object(myclass, "mydog3", (object_test.get_var("test", initial_value=3),))
 
-mydog1.call_function(dog_bark, (object_test.get_var("test", initial_value=15), ))
-mydog3.call_function(dog_bark, (object_test.get_var("test", initial_value=35), ))
+mydog1.call_function(dog_bark, (object_test.get_var("test", initial_value=15),))
+mydog3.call_function(dog_bark, (object_test.get_var("test", initial_value=35),))
 
 # DEPLOYMENT
 object_test.set_namespace(n)

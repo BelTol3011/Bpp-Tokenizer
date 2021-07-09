@@ -268,5 +268,6 @@ def main():
                        Keybind("key.jump"),
                        NBT("Pos", entity="@e", separator=[PlainText("SEP", color="red")])))
 
+
 if __name__ == '__main__':
     main()

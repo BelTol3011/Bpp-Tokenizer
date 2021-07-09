@@ -49,10 +49,11 @@ class MCPrimitiveVar:
         # change context to this object via fetch_object
         self.function.comment(f"{self}.{function}({pp_args(args)})")
 
-        libmcutils.call_function(self.function, "fetch_object", self)
+        libmcutils.call_function(self.function, libmcutils.fetch_object, self)
 
         # call the function as the fetched object
-        self.function.call_function(function, args, player=libmcutils.return_selector)
+        self.function.call_function(function, args, player=libmcutils.return_selector,
+                                    comment="call the function as the fetched object")
 
 
 class MCClass:
@@ -105,11 +106,6 @@ class MCNamespace:
         return name + str(self.function_names[name])
 
 
-class CompilationWarning(Warning):
-    def __init__(self, message: str, command: str):
-        super().__init__(f"{message}: {command}")
-
-
 class MCFunction:
     def __init__(self, name: str, arguments: tuple[str, ...] = (), namespace: MCNamespace = None, player: str = None):
         self.commands: Code = []
@@ -128,11 +124,10 @@ class MCFunction:
 
             # pop
             self.comment(f"pop {var}")
-            self.call_function("pop")
+            result = libmcutils.call_function(self, libmcutils.pop)
 
             # define var
-            # TODO: Change to libmcutils library
-            self.add_command(mccw.score_set(var.player, var.objective, "ret", "mcutils"), "finish pop")
+            self.score_copy(var, result)
 
             # add var to arg list
             self.arguments += (var,)
@@ -154,31 +149,32 @@ class MCFunction:
         assert len(objective) <= 16
         self.objectives.append(objective)
 
-    def call_function(self, function: Union["MCFunction", str], arguments: tuple[MCPrimitiveVar] = (), player: str = None):
-        self.comment(f"{function}({pp_args(arguments)})")
+    def call_function(self, function: Union["MCFunction", str], arguments: tuple[MCPrimitiveVar] = (),
+                      player: str = None, comment: str = ""):
         # push arguments to stack
         # reverse arguments because first argument is pushed first so the last argument is the first to be popped
         arguments = list(arguments)
         arguments.reverse()
 
         for argument in arguments:
-            # TODO: Change to libmcutils library
-            self.add_command(mccw.score_set("arg", "mcutils", argument.player, argument.objective),
-                             f"set arg {argument} for mcutils push operation")
-            self.add_command(mccw.call_function("$push"), "invoke mcutils push operation")
+            libmcutils.call_function(self, libmcutils.push, argument)
+
         if isinstance(function, MCFunction):
             name = function.name
         else:
             name = function
             issue_warning(CompilationWarning("Try using an MCFunction object instead of a str", function))
 
-        command = mccw.call_function(f"${name}")#, f"call {name} function"
+        command = mccw.call_function(f"${name}")  # , f"call {name} function"
         if player:
             command = Execute().as_(player).at("@s").run(command)
-        self.add_command(command)
+        self.add_command(command, comment=comment)
+
+        self.comment(f"{function}({pp_args(arguments)})")
 
     def get_function_list(self) -> Code:
-        return [f"### {self.name}"] + self.commands + sum([[f"### {function.name}", f"# sub function of {self.name}"] + function.get_code() for function in self.sub_functions], [])
+        return [f"### {self.name}", f"# args: {pp_args(self.arguments)}"] + self.get_code() + \
+               sum([function.get_function_list() for function in self.sub_functions], [])
 
     def get_player(self):
         # mcfunctions are static so this is constant
@@ -206,11 +202,11 @@ class MCFunction:
 
     def create_object(self, class_: MCClass, name: str, args: tuple[MCPrimitiveVar]) -> MCPrimitiveVar:
         # call create_object backend
-        self.call_function("create_object")
+        object_id = libmcutils.call_function(self, libmcutils.create_object)
 
         # create the variable with the object id
         var = self.get_var(name)
-        self.score_copy(var, libmcutils.return_var)
+        self.score_copy(var, object_id)
 
         # call init of object
         var.call_function(class_.get_init(), args)
@@ -260,11 +256,6 @@ class MCFunction:
         self.add_command(
             mccw.score_set(target_var.player, target_var.objective, origin_var.player, origin_var.objective),
             f"{target_var} = {origin_var}")
-
-
-def issue_warning(warning: Warning):
-    warnings.warn(warning)
-    sys.stderr.write("".join(traceback.format_stack()[:-1]) + "\n")
 
 
 def pp_args(args: Iterable[MCPrimitiveVar], sep: str = ", "):
